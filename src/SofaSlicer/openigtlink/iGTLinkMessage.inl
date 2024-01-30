@@ -34,17 +34,6 @@ void iGTLinkMessage<iGTKM,SOFAT>::init()
 }
 
 
-template<class iGTKM, class SOFAT>
-void iGTLinkMessage<iGTKM,SOFAT>::setDirty(bool _dirty)
-{
-    m_isDirty = true;
-}
-
-template<class iGTKM, class SOFAT>
-const bool iGTLinkMessage<iGTKM,SOFAT>::getDirty() const
-{
-    return m_isDirty;
-}
 
 
 

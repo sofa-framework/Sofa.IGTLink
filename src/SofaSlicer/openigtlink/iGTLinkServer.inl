@@ -79,8 +79,12 @@ void iGTLinkServer::sendMessages()
 {
     for(auto it : m_messageObjects)
     {
-        auto message = it.second->getiGTLinkMessage();
-        m_socket->Send(message->GetPackPointer(),message->GetPackSize());
+        if(it.second->getDirty())
+        {
+            auto message = it.second->getiGTLinkMessage();
+            m_socket->Send(message->GetPackPointer(), message->GetPackSize());
+            it.second->setDirty(false);
+        }
     }
 }
 

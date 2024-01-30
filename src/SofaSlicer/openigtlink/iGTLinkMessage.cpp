@@ -18,6 +18,25 @@ template <>
 igtl::MessageBase::Pointer iGTLinkMessage<igtl::PointMessage,sofa::defaulttype::Vec3Types>::getiGTLinkMessage()
 {
 
+    // Create a point message
+    igtl::MessageBase::Pointer pointMsg;
+    pointMsg = igtl::PointMessage::New();
+    pointMsg->SetDeviceName(getName());
+
+    igtl::PointMessage * pointPtr = static_cast<igtl::PointMessage*>(pointMsg.GetPointer());
+
+    for(auto point: d_data.getValue())
+    {
+        auto igtlPoint = igtl::PointElement::New();
+        igtlPoint->SetPosition(point[0],point[1],point[3]);
+//        igtlPoint->SetName("POINT_0");
+//        igtlPoint->SetGroupName("GROUP_0");
+//        igtlPoint->SetRGBA(0xFF, 0x00, 0x00, 0xFF);
+//        igtlPoint->SetRadius(15.0);
+//        igtlPoint->SetOwner("IMAGE_0");
+        pointPtr->AddPointElement(igtlPoint);
+    }
+    return pointMsg;
 }
 
 template <>

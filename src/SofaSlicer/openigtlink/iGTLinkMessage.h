@@ -18,14 +18,29 @@ namespace SofaSlicer::openigtlink
     public:
         SOFA_CLASS(iGTLinkMessageBase,BaseObject);
 
+        iGTLinkMessageBase() : m_isDirty(false) {};
+
         virtual igtl::MessageBase::Pointer getiGTLinkMessage() = 0;
         virtual void updateData(igtl::MessageBase::Pointer) = 0;
+
+        void setDirty(bool _dirty)
+        {
+            m_isDirty = true;
+        }
+
+        const bool getDirty() const
+        {
+            return m_isDirty;
+        }
+
+    private:
+        bool m_isDirty;
     };
 
     template<class iGTKM, class SOFAT>
     class iGTLinkMessage : public iGTLinkMessageBase
     {
-        typedef typename SOFAT::Coord Coord;
+        typedef typename SOFAT::VecCoord VecCoord;
 
     public:
         SOFA_CLASS(SOFA_TEMPLATE2(iGTLinkMessage,iGTKM,SOFAT),iGTLinkMessageBase);
@@ -40,15 +55,12 @@ namespace SofaSlicer::openigtlink
         igtl::MessageBase::Pointer getiGTLinkMessage();
         void updateData(igtl::MessageBase::Pointer);
 
-        void setDirty(bool);
-        const bool getDirty() const;
 
         static std::string templateName(const iGTLinkMessage<iGTKM, SOFAT>* = nullptr) { return "Unknown"; }
 
     private:
         DataCallback c_callBack;
-        Data<Coord> d_data;
-        bool m_isDirty;
+        Data<VecCoord> d_data;
     };
 
 }
