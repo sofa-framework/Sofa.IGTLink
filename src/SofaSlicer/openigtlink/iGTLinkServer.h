@@ -8,13 +8,13 @@
 #include <igtl/igtlPointMessage.h>
 #include <igtl/igtlServerSocket.h>
 #include <SofaSlicer/openigtlink/iGTLinkBase.h>
-#include <SofaSlicer/openigtlink/iGTLinkMessageBase.h>
+#include <SofaSlicer/openigtlink/iGTLinkMessage.h>
 
 using namespace sofa::core::objectmodel;
 
 namespace SofaSlicer::openigtlink
 {
-    class iGTLinkServer : public BaseObject, public iGTLinkBase
+    class iGTLinkServer : public iGTLinkBase
     {
     public:
         iGTLinkServer();
@@ -35,7 +35,6 @@ namespace SofaSlicer::openigtlink
         igtl::ServerSocket::Pointer m_serverSocket;
         igtl::Socket::Pointer m_socket;
         Data<int> d_port;
-        std::map<std::string,iGTLinkMessageBase *> m_messageObjects;
 
     };
 }

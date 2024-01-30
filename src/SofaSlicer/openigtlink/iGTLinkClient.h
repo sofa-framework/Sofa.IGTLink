@@ -1,5 +1,4 @@
 #pragma once
-#include <sofa/core/objectmodel/BaseObject.h>
 #include <sofa/core/objectmodel/Data.h>
 
 #include <string>
@@ -13,7 +12,7 @@ using namespace sofa::core::objectmodel;
 
 namespace SofaSlicer::openigtlink
 {
-    class iGTLinkClient : public BaseObject, public iGTLinkBase
+    class iGTLinkClient : public iGTLinkBase
     {
     public:
         iGTLinkClient();

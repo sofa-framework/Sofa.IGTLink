@@ -73,26 +73,15 @@ void iGTLinkServer::handleEvent(Event *event)
     }
 }
 
-void iGTLinkServer::addMessageObject(iGTLinkMessageBase * _object)
-{
-    if(m_messageObjects.find(_object->getName()) == m_messageObjects.end())
-    {
-        m_messageObjects[_object->getName()] = _object;
-    }
-    else
-    {
-        msg_warning(std::string("Message with name ") + _object->getName() + " already exists.");
-    }
-}
 
-void iGTLinkServer::removeMessageObject(iGTLinkMessageBase * _object)
-{
-    m_messageObjects.erase(_object->getName());
-}
 
 void iGTLinkServer::sendMessages()
 {
-
+    for(auto it : m_messageObjects)
+    {
+        auto message = it.second->getiGTLinkMessage();
+        m_socket->Send(message->GetPackPointer(),message->GetPackSize());
+    }
 }
 
 
