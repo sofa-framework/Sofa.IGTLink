@@ -1,10 +1,12 @@
 import Sofa
 import SofaRuntime
-import SofaSlicerPrefab.Headers as headers
+import Headers as headers
+import SimulatedObjects as so
 
 def createScene(root):
 
-    root = headers.addContactHeader(root,0.1,0.1)
+    root = headers.addDefaultHeader(root)
+    root = so.addLinearTetrahedronNode()
 
     return root
 

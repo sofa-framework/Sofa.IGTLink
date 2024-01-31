@@ -8,10 +8,15 @@ def addImplicitHeader(node, iterative=False,_iterations=25,_tolerance=1e-5,_thre
 
     return node
 
-def addTopology(node, elems, type='tetrahedron' ):
+def addTopology(node, elems, type='tetrahedron', loader='none' ):
 
+    if len(loader)>1:
+        srcfromLoader = (loader[0] == '@')
 
     if type=='tetrahedron':
+        if(srcfromLoader):
+            node.addObject("TetrahedronSetTopologyContainer", name="Container", tetrahedra=elems)
+
         node.addObject("TetrahedronSetTopologyContainer", name="Container", tetrahedra=elems)
         node.addObject("TetrahedronSetTopologyModifier", name="Modifier")
     elif type=='hexaedron':
