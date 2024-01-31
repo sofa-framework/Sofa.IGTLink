@@ -29,8 +29,10 @@ iGTLinkMessage<iGTKM,SOFAT>::~iGTLinkMessage()
 template<class iGTKM, class SOFAT>
 void iGTLinkMessage<iGTKM,SOFAT>::init()
 {
-    if(l_iGTLink->isConnected())
+    if(!l_iGTLink.empty())
+    {
         l_iGTLink->addMessageObject(this);
+    }
 }
 
 

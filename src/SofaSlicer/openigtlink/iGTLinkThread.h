@@ -1,52 +1,54 @@
-#pragma once
-
-#include <thread>
-#include <functional>
-#include <memory>
-#include <atomic>
-#include <SofaSlicer/openigtlink/iGTLinkBase.h>
-
-namespace SofaSlicer::openigtlink
-{
-    class iGTLinkBaseThread
-    {
-    public:
-        iGTLinkBaseThread(iGTLinkBase* _link) : m_link(_link), m_thread(nullptr) {}
-
-        void mainLoop()
-        {
-            m_running.store(true);
-            while(m_running.load(std::memory_order_relaxed))
-            {
-                if(!m_link->isConnected())
-                    m_link->tryConnect();
-                else
-                    doLoop();
-            }
-        }
-
-        virtual void doLoop() = 0;
-
-        void launchThread()
-        {
-            m_thread.reset(new std::thread(std::bind(&iGTLinkBaseThread::mainLoop,this)));
-        }
-
-        void stopThread()
-        {
-            if(m_thread)
-            {
-                m_running.store(false);
-                if (m_thread->joinable())
-                    m_thread->join();
-            }
-            m_thread = NULL;
-        }
-
-    private:
-        std::atomic<bool> m_running;
-        std::shared_ptr<std::thread> m_thread;
-        iGTLinkBase * m_link;
-    };
-
-}
+//#pragma once
+//
+//#include <thread>
+//#include <functional>
+//#include <memory>
+//#include <atomic>
+//#include <mutex>
+//#include <SofaSlicer/openigtlink/iGTLinkMessage.h>
+//#include <sofa/core/objectmodel/Data.h>
+//
+//class iGTLinkBase;
+//using namespace sofa::core::objectmodel;
+//
+//namespace SofaSlicer::openigtlink
+//{
+//    class iGTLinkBaseThread
+//    {
+//    public:
+//        iGTLinkBaseThread(iGTLinkBase* _link) : m_link(_link), m_thread(nullptr){}
+//
+//        void mainLoop();
+//
+//        virtual void doLoop() = 0;
+//
+//        void launchThread();
+//        void stopThread();
+//
+//    protected:
+//        std::atomic<bool> m_running;
+//        std::shared_ptr<std::thread> m_thread;
+//        iGTLinkBase * m_link;
+//    };
+//
+//    class iGTLinkRecieverThread : public iGTLinkBaseThread
+//    {
+//    public:
+//        iGTLinkRecieverThread();
+//
+//        virtual void doLoop();
+//
+//        std::map<std::string,igtl::MessageBase::Pointer>& getAvailableData();
+//
+//    private:
+//        void swapData();
+//
+//        std::atomic<unsigned> m_currentData;
+//        std::map<std::string,igtl::MessageBase::Pointer> m_dataStructures[2];
+//        std::mutex m_mutex[2];
+//        Data<int> d_timeout;
+//
+//
+//    };
+//
+//}

@@ -18,22 +18,17 @@ namespace SofaSlicer::openigtlink
     {
     public:
         iGTLinkServer();
-        ~iGTLinkServer() = default;
+        ~iGTLinkServer();
 
         void init();
-        void bwdInit();
+//        void bwdInit();
 
         virtual bool tryConnect();
         virtual bool isConnected();
-        void handleEvent(Event *event);
-        void sendMessages();
-        void addMessageObject(iGTLinkMessageBase *);
-        void removeMessageObject(iGTLinkMessageBase *);
 
 
     private:
         igtl::ServerSocket::Pointer m_serverSocket;
-        igtl::Socket::Pointer m_socket;
         Data<int> d_port;
 
     };

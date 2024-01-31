@@ -20,4 +20,33 @@ namespace SofaSlicer::openigtlink
     {
         m_messageObjects.erase(_object->getName());
     }
+
+    void iGTLinkBase::updateMessages()
+    {
+        //TODO unpack data comming from thread
+
+
+        for(auto it : m_messageObjects)
+        {
+            if(it.second->getDirty())
+            {
+                auto message = it.second->getiGTLinkMessage();
+                int success = m_socket->Send(message->GetPackPointer(), message->GetPackSize());
+                it.second->setDirty(false);
+            }
+        }
+    }
+
+    void iGTLinkBase::handleEvent(Event *event)
+    {
+
+        if(sofa::simulation::AnimateBeginEvent::checkEventType(event))
+        {
+            if(d_componentState.getValue()!=ComponentState::Valid)
+            {
+                if(!tryConnect()) return;
+            }
+            updateMessages();
+        }
+    }
 }
