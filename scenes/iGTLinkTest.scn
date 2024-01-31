@@ -31,7 +31,7 @@
     <DefaultAnimationLoop />
 
 
-    <iGTLinkServer name="iGTLServer"  port="18944"/>
+<!--    <iGTLinkServer name="iGTLServer"  port="18944"/>-->
     <iGTLinkClient name="iGTLClient" hostname="127.0.0.1" port="18944"/>
     <!-- $$$$$$$$$$$$$$$$$$$$$$ TOPOLOGY 1 $$$$$$$$$$$$$$$$$$$$$$ -->
     <Node name="BEAMVOLUME">
