@@ -19,6 +19,10 @@ namespace SofaSlicer::openigtlink
         }
     }
 
+    bool iGTLinkBaseThread::threadRunning()
+    {
+        return m_running.load(std::memory_order_relaxed);
+    }
 
     void iGTLinkBaseThread::launchThread()
     {
@@ -36,20 +40,31 @@ namespace SofaSlicer::openigtlink
         m_thread = NULL;
     }
 
-    iGTLinkRecieverThread::iGTLinkRecieverThread(iGTLinkBase* _link) : iGTLinkBaseThread(_link)
+    iGTLinkReceiverThread::iGTLinkReceiverThread(iGTLinkBase* _link) : iGTLinkBaseThread(_link), m_dataAvailable(false)
     {
         m_currentData.store(0);
     }
 
-    void iGTLinkRecieverThread::swapData()
+    bool iGTLinkReceiverThread::isDataAvailable()
     {
-        unsigned swapped = (m_currentData.load(std::memory_order_relaxed) +1) % 2;
-        m_currentData.store(swapped);
+        return m_dataAvailable.load(std::memory_order_relaxed);
     }
 
-    void iGTLinkRecieverThread::doLoop()
+    void iGTLinkReceiverThread::swapData()
     {
-        std::lock_guard<std::mutex> lock(m_mutex[m_currentData.load(std::memory_order_relaxed)]);
+        unsigned swapped = (m_currentData.load(std::memory_order_relaxed) +1) % 2;
+        m_dataAvailable.store(false);
+        m_currentData.store(swapped);
+//
+//        //Lock to make sure the thread has stopped to work on it
+//        m_mutex[(m_currentData.load(std::memory_order_relaxed) +1) % 2].lock();
+//        //Unlock now we know the thread is not working on it anymore
+//        m_mutex[(m_currentData.load(std::memory_order_relaxed) +1) % 2].unlock();
+    }
+
+    void iGTLinkReceiverThread::doLoop()
+    {
+//        std::lock_guard<std::mutex> lock(m_mutex[m_currentData.load(std::memory_order_relaxed)]);
 
         igtl::MessageHeader::Pointer headerMsg;
         headerMsg = igtl::MessageHeader::New();
@@ -91,15 +106,14 @@ namespace SofaSlicer::openigtlink
         dataMessage->AllocatePack();
         m_link->m_socket->Receive(dataMessage->GetPackBodyPointer(), dataMessage->GetPackBodySize(), timeout);
         m_dataStructures[m_currentData.load(std::memory_order_relaxed)][dataMessage->GetDeviceName()] = dataMessage;
+        m_dataAvailable.store(true);
     }
 
-    std::map<std::string,igtl::MessageBase::Pointer>& iGTLinkRecieverThread::getAvailableData()
+    std::map<std::string,igtl::MessageBase::Pointer>& iGTLinkReceiverThread::getAvailableData()
     {
         swapData();
-        m_mutex[(m_currentData.load(std::memory_order_relaxed) +1) % 2].lock();
 
         return m_dataStructures[(m_currentData.load(std::memory_order_relaxed) +1) % 2];
-
     }
 
 

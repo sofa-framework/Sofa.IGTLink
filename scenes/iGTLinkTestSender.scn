@@ -31,8 +31,8 @@
     <DefaultAnimationLoop />
 
 
-<!--    <iGTLinkServer name="iGTLServer"  port="18944"/>-->
-    <iGTLinkClient name="iGTLClient" hostname="127.0.0.1" port="18944"/>
+
+    <iGTLinkClient name="iGTLClient" hostname="127.0.0.1" port="18944" sender="true" sendTimeout="20"/>
     <!-- $$$$$$$$$$$$$$$$$$$$$$ TOPOLOGY 1 $$$$$$$$$$$$$$$$$$$$$$ -->
     <Node name="BEAMVOLUME">
         <RegularGrid name="HexaTop" n="25 5 5" min="0 0 0" max="0.5 0.1 0.1"/>
@@ -59,7 +59,6 @@
         <MechanicalObject name="mstate" template="Vec3d" src="@Container"/>
         <TetrahedronFEMForceField name="forceField" listening="true" youngModulus="6e4" poissonRatio="0.40" />
 
-<!--        <iGTLinkMessage name="BeamPoints" iGTLink="@../iGTLClient" template="PolyDataDouble" data="@mstate.position"/>-->
 
         <BoxROI name="box" box="-0.01 -0.01 -0.01 0.01 0.11 0.11"/>
         <FixedConstraint indices="@box.indices"/>
@@ -85,6 +84,8 @@
             <PointSetTopologyContainer name="Container" />
             <PointSetTopologyModifier name="Modifier"/>
             <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="1" showObjectScale="0.01" showColor="0 1 0"  showObject="true"/>
+            <iGTLinkMessage name="AttachPointMessage" iGTLink="@../../iGTLClient" template="PointVector" data="@mstate.position"/>
+
             <BarycentricMapping />
         </Node>
 

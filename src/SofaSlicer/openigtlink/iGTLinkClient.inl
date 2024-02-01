@@ -34,6 +34,15 @@ bool iGTLinkClient::tryConnect()
     {
         msg_info(this) <<  "Client is connected";
         d_componentState.setValue(ComponentState::Valid);
+        if(d_sender.getValue()) {
+            m_socket->SetSendTimeout(d_timeout.getValue());
+        }
+        else
+        {
+            m_socket->SetReceiveTimeout(d_timeout.getValue());
+        }
+        if(d_timeout.getValue()<0)
+            m_socket->SetReceiveBlocking(1);
     }
     return r != -1;
 }

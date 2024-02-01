@@ -1,6 +1,7 @@
 #pragma once
 #include <SofaSlicer/openigtlink/iGTLinkServer.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
+#include <SofaSlicer/openigtlink/iGTLinkThread.h>
 #include <map>
 
 
@@ -51,6 +52,15 @@ bool iGTLinkServer::tryConnect()
     {
         std::cout << ("One client is connected")<<std::endl;
         d_componentState.setValue(ComponentState::Valid);
+        if(d_sender.getValue()) {
+            m_socket->SetSendTimeout(d_timeout.getValue());
+        }
+        else
+        {
+            m_socket->SetReceiveTimeout(d_timeout.getValue());
+        }
+        if(d_timeout.getValue()<0)
+            m_socket->SetReceiveBlocking(1);
 
     }
     return m_socket;

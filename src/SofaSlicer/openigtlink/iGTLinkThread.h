@@ -16,12 +16,13 @@ namespace SofaSlicer::openigtlink
     class iGTLinkBaseThread
     {
     public:
-        iGTLinkBaseThread(iGTLinkBase* _link) : m_link(_link), m_thread(nullptr){}
+        iGTLinkBaseThread(iGTLinkBase* _link) : m_link(_link), m_thread(nullptr), m_running(false){}
 
         void mainLoop();
 
         virtual void doLoop() = 0;
 
+        bool threadRunning();
         void launchThread();
         void stopThread();
 
@@ -31,19 +32,21 @@ namespace SofaSlicer::openigtlink
         iGTLinkBase * m_link;
     };
 
-    class iGTLinkRecieverThread : public iGTLinkBaseThread
+    class iGTLinkReceiverThread : public iGTLinkBaseThread
     {
     public:
-        iGTLinkRecieverThread(iGTLinkBase* _link);
+        iGTLinkReceiverThread(iGTLinkBase* _link);
 
         virtual void doLoop();
 
+        bool isDataAvailable();
         std::map<std::string,igtl::MessageBase::Pointer>& getAvailableData();
 
     private:
         void swapData();
 
         std::atomic<unsigned> m_currentData;
+        std::atomic<bool> m_dataAvailable;
         std::map<std::string,igtl::MessageBase::Pointer> m_dataStructures[2];
         std::mutex m_mutex[2];
 

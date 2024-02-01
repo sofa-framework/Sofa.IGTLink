@@ -10,11 +10,13 @@ using namespace sofa::core::objectmodel;
 namespace SofaSlicer::openigtlink
 {
 
+
+//TODO Instead of specialization, inheritence should be used to enable multi input/output messages because the number of existing messages in igtlink is small.
 /****** POINT MESSAGES (FIDUCIALS) *****/
 template <>
 std::string iGTLinkMessage<igtl::PointMessage,sofa::defaulttype::Vec3Types>::templateName (const iGTLinkMessage<igtl::PointMessage,sofa::defaulttype::Vec3Types>* object)
 {
-    return "PointVector";
+        return "PointVector";
 }
 
 template <>
@@ -23,10 +25,10 @@ igtl::MessageBase::Pointer iGTLinkMessage<igtl::PointMessage,sofa::defaulttype::
     // Create a point message
     igtl::MessageBase::Pointer pointMsg;
     pointMsg = igtl::PointMessage::New();
-    pointMsg->SetDeviceName(getName());
 
     igtl::PointMessage * pointPtr = static_cast<igtl::PointMessage*>(pointMsg.GetPointer());
     pointPtr->InitPack();
+    pointMsg->SetDeviceName(getName());
 
 
     for(auto point: d_data.getValue())
@@ -51,6 +53,8 @@ void iGTLinkMessage<igtl::PointMessage,sofa::defaulttype::Vec3Types>::updateData
     pointPtr->Unpack();
 
 //    pointPtr->GetBufferBodyPointer()
+    d_data.beginEdit();
+
     sofa::helper::WriteAccessor data(d_data);
     data.resize(pointPtr->GetNumberOfPointElement());
     igtlFloat32 x,y,z;
@@ -64,7 +68,7 @@ void iGTLinkMessage<igtl::PointMessage,sofa::defaulttype::Vec3Types>::updateData
         data[i][1] = y;
         data[i][2] = z;
     }
-
+    d_data.endEdit();
 }
 
 /****** DOUBLE POINT MESSAGES (POLYDATA) *****/
@@ -80,11 +84,11 @@ igtl::MessageBase::Pointer iGTLinkMessage<igtl::PolyDataMessage,sofa::defaulttyp
     // Create a point message
     igtl::MessageBase::Pointer polyDataMessage;
     polyDataMessage = igtl::PolyDataMessage::New();
-    polyDataMessage->SetDeviceName(getName());
 
     igtl::PolyDataMessage * polyPtr = static_cast<igtl::PolyDataMessage*>(polyDataMessage.GetPointer());
 
     polyPtr->InitPack();
+    polyDataMessage->SetDeviceName(getName());
 
     igtl::PolyDataPointArray::Pointer pointArray;
     pointArray = igtl::PolyDataPointArray::New();
@@ -127,7 +131,10 @@ igtl::MessageBase::Pointer iGTLinkMessage<igtl::PolyDataMessage,sofa::defaulttyp
         // Create a point message
     igtl::MessageBase::Pointer polyDataMessage;
     polyDataMessage = igtl::PolyDataMessage::New();
+    polyDataMessage->InitPack();
     polyDataMessage->SetDeviceName(getName());
+
+
 
     if(d_data.getValue().size())
     {
