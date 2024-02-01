@@ -8,7 +8,7 @@
 #include <igtl/igtlPointMessage.h>
 #include <igtl/igtlServerSocket.h>
 #include <SofaSlicer/openigtlink/iGTLinkBase.h>
-#include <SofaSlicer/openigtlink/iGTLinkMessage.h>
+#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.h>
 
 using namespace sofa::core::objectmodel;
 

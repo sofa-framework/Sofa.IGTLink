@@ -50,7 +50,8 @@ file(GLOB_RECURSE SOURCE_FILES
         )
 
 # SOFA plugin are basically libraries
-add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES}
+        src/SofaSlicer/openigtlink/messages/iGTLinkPointMessage.h)
 target_link_libraries(${PROJECT_NAME} Sofa.Framework Sofa.Component.Topology Sofa.Component.StateContainer OpenIGTLink Threads::Threads)
 ### Dependencies
 include_directories(src)

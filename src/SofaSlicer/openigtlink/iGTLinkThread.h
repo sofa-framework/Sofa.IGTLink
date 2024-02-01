@@ -5,7 +5,7 @@
 #include <memory>
 #include <atomic>
 #include <mutex>
-#include <SofaSlicer/openigtlink/iGTLinkMessage.h>
+#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.h>
 #include <sofa/core/objectmodel/Data.h>
 
 class iGTLinkBase;

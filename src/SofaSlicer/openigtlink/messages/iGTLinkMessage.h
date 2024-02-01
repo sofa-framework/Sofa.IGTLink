@@ -1,10 +1,10 @@
 #pragma once
 
-#include <sofa/core/objectmodel/BaseObject.h>
-#include <sofa/core/objectmodel/Data.h>
-#include <sofa/core/objectmodel/DataLink.h>
-#include <sofa/core/objectmodel/Link.h>
-#include <sofa/core/objectmodel/DataCallback.h>
+#include "sofa/core/objectmodel/BaseObject.h"
+#include "sofa/core/objectmodel/Data.h"
+#include "sofa/core/objectmodel/DataLink.h"
+#include "sofa/core/objectmodel/Link.h"
+#include "sofa/core/objectmodel/DataCallback.h"
 #include <igtlMessageBase.h>
 #include <SofaSlicer/openigtlink/iGTLinkBase.h>
 
@@ -37,30 +37,26 @@ namespace SofaSlicer::openigtlink
         bool m_isDirty;
     };
 
-    template<class iGTKM, class SOFAT>
     class iGTLinkMessage : public iGTLinkMessageBase
     {
-        typedef typename SOFAT::VecCoord VecCoord;
-
     public:
-        SOFA_CLASS(SOFA_TEMPLATE2(iGTLinkMessage,iGTKM,SOFAT),iGTLinkMessageBase);
+        SOFA_CLASS(iGTLinkMessage,iGTLinkMessageBase);
 
         iGTLinkMessage();
         ~iGTLinkMessage();
 
-        SingleLink<iGTLinkMessage<iGTKM, SOFAT>, iGTLinkBase, BaseLink::FLAG_STOREPATH | BaseLink::FLAG_STRONGLINK> l_iGTLink;
+        SingleLink<iGTLinkMessage, iGTLinkBase, BaseLink::FLAG_STOREPATH | BaseLink::FLAG_STRONGLINK> l_iGTLink;
 
         void init();
 
-        igtl::MessageBase::Pointer getiGTLinkMessage();
-        void updateData(igtl::MessageBase::Pointer);
+        igtl::MessageBase::Pointer getiGTLinkMessage() = 0;
+        void updateData(igtl::MessageBase::Pointer) = 0;
 
 
-        static std::string templateName(const iGTLinkMessage<iGTKM, SOFAT>* = nullptr) { return "Unknown"; }
+        static std::string templateName(const iGTLinkMessage* = nullptr) { return "Unknown"; }
 
     private:
         DataCallback c_callBack;
-        Data<VecCoord> d_data;
     };
 
 }

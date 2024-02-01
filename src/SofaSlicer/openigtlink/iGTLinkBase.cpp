@@ -1,5 +1,5 @@
 #include <SofaSlicer/openigtlink/iGTLinkBase.h>
-#include <SofaSlicer/openigtlink/iGTLinkMessage.h>
+#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.h>
 #include <SofaSlicer/openigtlink/iGTLinkThread.h>
 
 
