@@ -41,11 +41,7 @@
         <Hexa2TetraTopologicalMapping input="@HexaTop" output="@Container" swapping="true"/>
     </Node>
 
-    <Node name="AttachPoint">
-        <PointSetTopologyContainer name="Container" />
-        <PointSetTopologyModifier name="Modifier"/>
-        <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="2" showObjectScale="0.01" showObject="true"/>
-    </Node>
+
 
     <Node name="FEM">
         <EulerImplicitSolver firstOrder="false" rayleighMass="0.1" rayleighStiffness="0.1"/>
@@ -83,7 +79,7 @@
         <Node name="AttachPoint">
             <PointSetTopologyContainer name="Container" />
             <PointSetTopologyModifier name="Modifier"/>
-            <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="1" showObjectScale="0.01" showColor="0 1 0"  showObject="true"/>
+            <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="1" showObjectScale="0.01" showColor="0 1 0"  showObject="false"/>
             <iGTLinkMessage name="AttachPointMessage" iGTLink="@../../iGTLClient" template="PointVector" data="@mstate.position"/>
 
             <BarycentricMapping />
