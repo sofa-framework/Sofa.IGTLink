@@ -2,7 +2,7 @@
 
 #include <map>
 #include <sofa/core/objectmodel/BaseObject.h>
-#include <igtl/igtlClientSocket.h>
+#include <igtlClientSocket.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
 
 

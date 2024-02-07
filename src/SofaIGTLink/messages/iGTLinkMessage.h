@@ -6,7 +6,7 @@
 #include "sofa/core/objectmodel/Link.h"
 #include "sofa/core/objectmodel/DataCallback.h"
 #include <igtlMessageBase.h>
-#include <SofaSlicer/openigtlink/iGTLinkBase.h>
+#include <SofaIGTLink/sockets/iGTLinkBase.h>
 
 
 using namespace sofa::core::objectmodel;

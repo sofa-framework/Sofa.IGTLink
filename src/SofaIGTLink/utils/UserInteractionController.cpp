@@ -1,4 +1,4 @@
-#include <SofaSlicer/utils/UserInteractionController.inl>
+#include <SofaIGTLink/utils/UserInteractionController.inl>
 #include <sofa/core/ObjectFactory.h>
 
 namespace SofaSlicer {

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <SofaSlicer/openigtlink/messages/iGTLinkPointMessage.h>
-#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.inl>
+#include "sofa/core/ObjectFactory.h"
+#include <SofaIGTLink/messages/iGTLinkPointMessage.h>
+#include <SofaIGTLink/messages/iGTLinkMessage.inl>
 #include <igtlPointMessage.h>
 
 using namespace sofa::core::objectmodel;
@@ -80,5 +81,8 @@ void iGTLinkPointMessage<DataType>::updateData(igtl::MessageBase::Pointer messag
     }
     d_points.endEdit();
 }
+
+static int iGTLinkPointMessageInt = sofa::core::RegisterObject("iGTLink messages")
+        .add< iGTLinkPointMessage<sofa::defaulttype::Vec3Types> >();
 
 }

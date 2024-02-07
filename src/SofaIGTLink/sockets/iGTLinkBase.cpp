@@ -1,6 +1,6 @@
-#include <SofaSlicer/openigtlink/iGTLinkBase.h>
-#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.h>
-#include <SofaSlicer/openigtlink/iGTLinkThread.h>
+#include <SofaIGTLink/sockets/iGTLinkBase.h>
+#include <SofaIGTLink/messages/iGTLinkMessage.h>
+#include <SofaIGTLink/sockets/iGTLinkThread.h>
 
 
 namespace SofaSlicer::openigtlink

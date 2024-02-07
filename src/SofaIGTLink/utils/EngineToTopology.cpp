@@ -1,4 +1,4 @@
-#include <SofaSlicer/utils/EngineToTopology.inl>
+#include <SofaIGTLink/utils/EngineToTopology.inl>
 #include <sofa/core/ObjectFactory.h>
 
 namespace sofa {

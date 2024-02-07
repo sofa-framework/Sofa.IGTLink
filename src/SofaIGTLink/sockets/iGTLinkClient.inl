@@ -1,5 +1,5 @@
 #pragma once
-#include <SofaSlicer/openigtlink/iGTLinkClient.h>
+#include <SofaIGTLink/sockets/iGTLinkClient.h>
 
 
 namespace SofaSlicer::openigtlink

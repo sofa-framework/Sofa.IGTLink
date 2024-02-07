@@ -4,11 +4,11 @@
 
 #include <string>
 
-#include <igtl/igtlOSUtil.h>
-#include <igtl/igtlPointMessage.h>
-#include <igtl/igtlServerSocket.h>
-#include <SofaSlicer/openigtlink/iGTLinkBase.h>
-#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.h>
+#include <igtlOSUtil.h>
+#include <igtlPointMessage.h>
+#include <igtlServerSocket.h>
+#include <SofaIGTLink/sockets/iGTLinkBase.h>
+#include <SofaIGTLink/messages/iGTLinkMessage.h>
 
 using namespace sofa::core::objectmodel;
 

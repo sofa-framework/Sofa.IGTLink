@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(SofaSlicer)
+project(SofaIGTLink)
 set(CMAKE_CXX_STANDARD 17)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
@@ -8,17 +8,20 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 find_package(Sofa.Framework REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Sofa.Component.Topology REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Sofa.Component.StateContainer REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
-find_package(OpenIGTLink REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
+
 find_package(Threads REQUIRED)
-#if(NOT OpenIGTLink_FOUND )
-#        message("SofaSlicer: DEPENDENCY OpenIGTLink NOT FOUND, OpenIGTLink cxxopt...")
-#
-#        include(FetchContent)
-#        FetchContent_Declare(OpenIGTLink
-#                GIT_REPOSITORY https://github.com/openigtlink/OpenIGTLink
-#        )
-#
-#        FetchContent_GetProperties(OpenIGTLink)
+
+find_package(OpenIGTLink QUIET) # Needed to use SofaCore, SofaHelper and SofaDefaultType
+if(NOT OpenIGTLink_FOUND )
+        message("SofaSlicer: DEPENDENCY OpenIGTLink NOT FOUND, fetching OpenIGTLink...")
+
+        include(FetchContent)
+        FetchContent_Declare(OpenIGTLink
+                GIT_REPOSITORY https://github.com/openigtlink/OpenIGTLink
+                GIT_TAG master
+        )
+
+        FetchContent_MakeAvailable(OpenIGTLink)
 #        if(NOT OpenIGTLink_POPULATED)
 #                FetchContent_Populate(OpenIGTLink)
 #
@@ -27,17 +30,9 @@ find_package(Threads REQUIRED)
 #                set(OpenIGTLink_BUILD_TESTING OFF CACHE INTERNAL "")
 #                message("SofaSlicer: adding subdirectory ${OpenIGTLink_SOURCE_DIR}")
 #
-#                add_subdirectory(${OpenIGTLink_SOURCE_DIR} ${OpenIGTLink_BINARY_DIR})
+#                add_subdirectory(${OpenIGTLink_SOURCE_DIR})
 #        endif()
-#endif()
-
-
-set(CONFIG_FILES
-        src/SofaSlicer/initSofaSlicer.cpp
-)
-
-get_property(SOFA_SOURCE_DIR_ALL TARGET Sofa.Framework PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
-list(GET SOFA_SOURCE_DIR_ALL 0 SOFA_SOURCE_DIR)
+endif()
 
 # Our nice new SOFA Components
 file(GLOB_RECURSE HEADER_FILES
@@ -50,10 +45,8 @@ file(GLOB_RECURSE SOURCE_FILES
         )
 
 # SOFA plugin are basically libraries
-add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES}
-        src/SofaSlicer/openigtlink/messages/iGTLinkPointMessage.h)
+add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} Sofa.Framework Sofa.Component.Topology Sofa.Component.StateContainer OpenIGTLink Threads::Threads)
-### Dependencies
 include_directories(src)
 
 

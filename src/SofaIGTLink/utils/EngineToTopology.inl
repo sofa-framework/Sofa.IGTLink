@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SofaSlicer/utils/EngineToTopology.h>
+#include <SofaIGTLink/utils/EngineToTopology.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/type/Quat.h>
 #include <sofa/core/ObjectFactory.h>

@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <SofaSlicer/openigtlink/messages/iGTLinkMessage.h>
+#include <SofaIGTLink/messages/iGTLinkMessage.h>
 
 
 using namespace sofa::core::objectmodel;

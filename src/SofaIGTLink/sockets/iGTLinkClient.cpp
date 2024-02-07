@@ -1,7 +1,7 @@
 #define SOFASLICER_IGTCLIENT_CPP
 
 #include <sofa/core/ObjectFactory.h>
-#include <SofaSlicer/openigtlink/iGTLinkClient.inl>
+#include <SofaIGTLink/sockets/iGTLinkClient.inl>
 
 namespace SofaSlicer::openigtlink
 {

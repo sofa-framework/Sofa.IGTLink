@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SofaSlicer/utils/UserInteractionController.h>
+#include <SofaIGTLink/utils/UserInteractionController.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/type/Quat.h>
 #include <sofa/core/ObjectFactory.h>

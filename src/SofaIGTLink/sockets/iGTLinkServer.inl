@@ -1,7 +1,7 @@
 #pragma once
-#include <SofaSlicer/openigtlink/iGTLinkServer.h>
+#include <SofaIGTLink/sockets/iGTLinkServer.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
-#include <SofaSlicer/openigtlink/iGTLinkThread.h>
+#include <SofaIGTLink/sockets/iGTLinkThread.h>
 #include <map>
 
 
