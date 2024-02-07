@@ -8,33 +8,19 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 find_package(Sofa.Framework REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Sofa.Component.Topology REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Sofa.Component.StateContainer REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
-
 find_package(Threads REQUIRED)
 
 find_package(OpenIGTLink QUIET) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 if(NOT OpenIGTLink_FOUND )
-        message("SofaSlicer: DEPENDENCY OpenIGTLink NOT FOUND, fetching OpenIGTLink...")
-
+        message("SofaIGTLink: DEPENDENCY OpenIGTLink NOT FOUND, fetching OpenIGTLink...")
         include(FetchContent)
         FetchContent_Declare(OpenIGTLink
                 GIT_REPOSITORY https://github.com/openigtlink/OpenIGTLink
                 GIT_TAG master
         )
-
         FetchContent_MakeAvailable(OpenIGTLink)
-#        if(NOT OpenIGTLink_POPULATED)
-#                FetchContent_Populate(OpenIGTLink)
-#
-#                set(OpenIGTLink_BUILD_GENERATE_PIC OFF CACHE INTERNAL "")
-#                set(OpenIGTLink_BUILD_SHARED_LIBS ON CACHE INTERNAL "")
-#                set(OpenIGTLink_BUILD_TESTING OFF CACHE INTERNAL "")
-#                message("SofaSlicer: adding subdirectory ${OpenIGTLink_SOURCE_DIR}")
-#
-#                add_subdirectory(${OpenIGTLink_SOURCE_DIR})
-#        endif()
 endif()
 
-# Our nice new SOFA Components
 file(GLOB_RECURSE HEADER_FILES
         "src/*.h"
         "src/*.inl"
