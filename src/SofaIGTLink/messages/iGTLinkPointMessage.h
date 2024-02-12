@@ -19,6 +19,10 @@ namespace SofaSlicer::openigtlink
         Data<sofa::type::vector<double>> d_radius;
         Data<sofa::type::vector<std::string>> d_labels;
         Data<sofa::type::vector<std::string>> d_groups;
-        Data<sofa::type::vector<std::string>> d_owner;
+        Data<sofa::type::vector<std::string>> d_owners;
+        Data<bool> d_enableRadius;
+        Data<bool> d_enableLabels;
+        Data<bool> d_enableGroups;
+        Data<bool> d_enableOwners;
     };
 }
