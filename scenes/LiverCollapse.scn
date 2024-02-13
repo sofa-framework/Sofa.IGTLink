@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<Node name="root" dt="0.01" gravity="9810 0 0" >
+    <RequiredPlugin name="Sofa.Component.IO.Mesh"/> <!-- Needed to use components [MeshOBJLoader,MeshVTKLoader] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Direct"/> <!-- Needed to use components [SparseLDLSolver] -->
+    <RequiredPlugin name="Sofa.Component.LinearSolver.Iterative"/> <!-- Needed to use components [CGLinearSolver] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.Linear"/> <!-- Needed to use components [BarycentricMapping,IdentityMapping] -->
+    <RequiredPlugin name="Sofa.Component.Mass"/> <!-- Needed to use components [MeshMatrixMass] -->
+    <RequiredPlugin name="Sofa.Component.ODESolver.Backward"/> <!-- Needed to use components [EulerImplicitSolver] -->
+    <RequiredPlugin name="Sofa.Component.Setting"/> <!-- Needed to use components [BackgroundSetting] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.FEM.Elastic"/> <!-- Needed to use components [TetrahedronFEMForceField] -->
+    <RequiredPlugin name="Sofa.Component.StateContainer"/> <!-- Needed to use components [MechanicalObject] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Dynamic"/> <!-- Needed to use components [TetrahedronSetTopologyContainer,TetrahedronSetTopologyModifier,TriangleSetTopologyContainer,TriangleSetTopologyModifier] -->
+    <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
+    <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="Sofa.Component.AnimationLoop"/> <!-- Needed to use components [FreeMotionAnimationLoop] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Algorithm"/> <!-- Needed to use components [BVHNarrowPhase,BruteForceBroadPhase,CollisionPipeline] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Detection.Intersection"/> <!-- Needed to use components [NewProximityIntersection] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Geometry"/> <!-- Needed to use components [TriangleCollisionModel] -->
+    <RequiredPlugin name="Sofa.Component.Collision.Response.Contact"/> <!-- Needed to use components [CollisionResponse] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Solver"/> <!-- Needed to use components [GenericConstraintSolver] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Correction"/> <!-- Needed to use components [LinearSolverConstraintCorrection] -->
+    <RequiredPlugin name="Sofa.Component.LinearSystem"/> <!-- Needed to use components [ConstantSparsityPatternSystem] -->
+    <RequiredPlugin name="Sofa.Component.MechanicalLoad"/> <!-- Needed to use components [ConstantForceField] -->
+    <RequiredPlugin name="MultiThreading"/> <!-- Needed to use components [ParallelBVHNarrowPhase ParallelBruteForceBroadPhase] -->
+    <RequiredPlugin name="Sofa.Component.SolidMechanics.Spring"/> <!-- Needed to use components [StiffSpringForceField TriangularBendingSprings] -->
+    <RequiredPlugin name="Sofa.Component.Constraint.Lagrangian.Model"/> <!-- Needed to use components [BilateralInteractionConstraint] -->
+    <RequiredPlugin name="Sofa.Component.Mapping.NonLinear"/> <!-- Needed to use components [RigidMapping] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
+    <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
+
+    <RequiredPlugin name="SofaSlicer"/> <!-- Needed to use components [OglModel] -->
+
+    <VisualStyle displayFlags="showVisualModels showForceFields" />
+    <BackgroundSetting color="0.8 0.8 0.8 1" />
+
+<!--    <FreeMotionAnimationLoop name="FreeMotionAnimationLoop" parallelODESolving="true" parallelCollisionDetectionAndFreeMotion="true"/>-->
+    <DefaultAnimationLoop name="FreeMotionAnimationLoop" parallelODESolving="true" parallelCollisionDetectionAndFreeMotion="true"/>
+<!--    <GenericConstraintSolver maxIterations="10" multithreading='true' tolerance="1.0e-3"/>-->
+<!--    <CollisionPipeline name="CollisionPipeline" />-->
+<!--    <ParallelBruteForceBroadPhase/>-->
+<!--    <ParallelBVHNarrowPhase/>-->
+<!--    <CollisionResponse name="ContactManager" response="FrictionContactConstraint" responseParams="mu=0.5" />-->
+<!--    <NewProximityIntersection name="Intersection" alarmDistance="0.2" contactDistance="0.02" />-->
+
+    <iGTLinkClient name="iGTLClient" sender="true" hostname="127.0.0.1" port="18944" />
+
+    <Node name="Mesh" >
+        <EulerImplicitSolver firstOrder="false" rayleighMass="0.1" rayleighStiffness="0.1" />
+<!--        <ConstantSparsityPatternSystem template="CompressedRowSparseMatrixf" name="A" printLog="false"/>-->
+        <SparseLDLSolver name="precond" template="CompressedRowSparseMatrixf"  parallelInverseProduct="true"  _linearSystem="@A"/>
+
+        <MeshVTKLoader name="loader" filename="right-long-mesh-low.vtk"  />
+        <TetrahedronSetTopologyContainer name="Container" src="@loader" />
+        <TetrahedronSetTopologyModifier name="Modifier"/>
+        <MechanicalObject name="mstate" template="Vec3f" />
+        <ParallelTetrahedronFEMForceField name="FEM"  youngModulus="1.5" poissonRatio="0.45" method="large" />
+<!--        <ConstantForceField totalForce="0 0 -2.5" />-->
+        <iGTLinkPolyDataMessage name="SOFAMesh" iGTLink="@../iGTLClient"
+                        points="@mstate.position"
+                        enableIndices="false"
+                        enableEdges="false"
+                        enableTriangles="false"
+                        enableTetra="false"
+                        enableHexa="false"
+        />
+
+        <BoxROI template="Vec3" box="0 170 0 -48 80 -300   0 220 0 -30 170 -300" drawBoxes="1" position="@mstate.rest_position" name="FixedROI" computeTriangles="0" computeTetrahedra="0" computeEdges="0" />
+        <FixedProjectiveConstraint template="Vec3" name="default6" indices="@FixedROI.indices" />
+
+        <MeshMatrixMass totalMass="1" />
+        <Node name="Collision">
+            <TriangleSetTopologyContainer name="Container" />
+            <TriangleSetTopologyModifier name="Modifier"/>
+            <Tetra2TriangleTopologicalMapping input="@../Container" output="@Container" />
+
+
+            <MechanicalObject name="dofs" rest_position="@../mstate.rest_position"  />
+            <TriangleCollisionModel name="Surface" proximity="0.02" />
+            <IdentityMapping name="SurfaceMapping"/>
+        </Node>
+
+<!--        <LinearSolverConstraintCorrection linearSolver="@precond"/>-->
+
+    </Node>
+
+
+
+
+<!--    <Node name="Floor" tags="NoBBox" >-->
+<!--        <VisualStyle displayFlags="showCollisionModels"/>-->
+<!--        <TriangleSetTopologyContainer name="FloorTopo" position="-20 -15 1  50 -15 1  50 15 1  -20 15 1" triangles="0 2 1  0 3 2" />-->
+<!--        <MechanicalObject template="Vec3d"/>-->
+<!--        <TriangleCollisionModel name="FloorCM" proximity="0.02" moving="0" simulated="0"  color="0.3 0.3 0.3 0.1"/>-->
+<!--    </Node>-->
+
+
+</Node >
+
