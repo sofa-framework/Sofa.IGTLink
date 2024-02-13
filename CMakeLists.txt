@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(SofaIGTLink)
+project(SofaIGTLink VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
@@ -36,8 +36,13 @@ target_link_libraries(${PROJECT_NAME} Sofa.Framework Sofa.Component.Topology Sof
 include_directories(src)
 
 
-install(TARGETS
-        ${PROJECT_NAME}
-        DESTINATION lib/${PROJECT_NAME})
+sofa_create_package_with_targets(
+        PACKAGE_NAME ${PROJECT_NAME}
+        PACKAGE_VERSION ${PROJECT_VERSION}
+        TARGETS ${PROJECT_NAME} AUTO_SET_TARGET_PROPERTIES
+        INCLUDE_SOURCE_DIR "src"
+        INCLUDE_INSTALL_DIR ${PROJECT_NAME}
+        RELOCATABLE "plugins"
+)
 
 
