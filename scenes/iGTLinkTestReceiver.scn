@@ -23,7 +23,7 @@
     <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping,Tetra2TriangleTopologicalMapping] -->
     <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
     <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
-    <RequiredPlugin name="SofaSlicer"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaIGTLink"/> <!-- Needed to use components [OglModel] -->
 
 
     <VisualStyle displayFlags="   showForceFields "/>
@@ -31,7 +31,12 @@
 
 
     <iGTLinkServer name="iGTLServer" sender="false" port="18944"/>
-    <iGTLinkMessage name="AttachPointMessage" iGTLink="@iGTLServer" receiveTimeout="-1" template="PointVector" _data="0.5 0.05 0.05"/>
+    <iGTLinkPointMessage name="AttachPointMessage" iGTLink="@iGTLServer"
+                         enableRadius="false"
+                         enableLabels="false"
+                         enableGroups="false"
+                         enableOwners="false"
+    />
 
 
     <!-- $$$$$$$$$$$$$$$$$$$$$$ TOPOLOGY 1 $$$$$$$$$$$$$$$$$$$$$$ -->
@@ -46,7 +51,7 @@
         <PointSetTopologyContainer name="Container" />
         <PointSetTopologyModifier name="Modifier"/>
         <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="2" showObjectScale="0.01" showObject="false"/>
-        <EngineToTopology state="@mstate" position="@../AttachPointMessage.data" template="Vec3d"/>
+        <EngineToMState state="@mstate" position="@../AttachPointMessage.points" template="Vec3d"/>
 
     </Node>
 
@@ -87,7 +92,7 @@
             <PointSetTopologyModifier name="Modifier"/>
             <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="1" showObjectScale="0.01" showColor="0 1 0"  showObject="false"/>
 
-            <UserInteractionController name="UIC" inStiffness="10000" reactionTime="50" position="@../../AttachPointMessage.data" />
+            <UserInteractionController name="UIC" inStiffness="10000" reactionTime="50" position="@../../AttachPointMessage.points" />
             <RestShapeSpringsForceField stiffness='@UIC.outStiffness'  external_rest_shape='@../../AttachPoint/mstate' points='0' external_points='0'/>
 
             <BarycentricMapping />

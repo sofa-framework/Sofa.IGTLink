@@ -23,7 +23,7 @@
     <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Hexa2TetraTopologicalMapping,Tetra2TriangleTopologicalMapping] -->
     <RequiredPlugin name="Sofa.Component.Visual"/> <!-- Needed to use components [VisualStyle] -->
     <RequiredPlugin name="Sofa.GL.Component.Rendering3D"/> <!-- Needed to use components [OglModel] -->
-    <RequiredPlugin name="SofaSlicer"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaIGTLink"/> <!-- Needed to use components [OglModel] -->
 
 
     <VisualStyle
@@ -80,7 +80,13 @@
             <PointSetTopologyContainer name="Container" />
             <PointSetTopologyModifier name="Modifier"/>
             <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="1" showObjectScale="0.01" showColor="0 1 0"  showObject="false"/>
-            <iGTLinkMessage name="AttachPointMessage" iGTLink="@../../iGTLClient" template="PointVector" data="@mstate.position"/>
+            <iGTLinkPointMessage name="AttachPointMessage" iGTLink="@../../iGTLClient"
+                            points="@mstate.position"
+                            enableRadius="false"
+                            enableLabels="false"
+                            enableGroups="false"
+                            enableOwners="false"
+            />
 
             <BarycentricMapping />
         </Node>

@@ -9,15 +9,15 @@ namespace SofaSlicer::openigtlink
 {
 template<class DataType>
 iGTLinkPointMessage<DataType>::iGTLinkPointMessage()
-:d_points(initData(&d_points,"points","points"))
-,d_radius(initData(&d_radius,"radius","radius"))
-,d_labels(initData(&d_labels,"labels","labels"))
-,d_groups(initData(&d_groups,"groups","groups"))
-,d_owners(initData(&d_owners,"owners","owner"))
-,d_enableRadius(initData(&d_enableRadius,true,"enableRadius","If false, the radius will not be either packed or unpacked"))
-,d_enableLabels(initData(&d_enableLabels,true,"enableLabels","If false, the labels will not be either packed or unpacked"))
-,d_enableGroups(initData(&d_enableGroups,true,"enableGroups","If false, the groups will not be either packed or unpacked"))
-,d_enableOwners(initData(&d_enableOwners,true,"enableOwners","If false, the owners will not be either packed or unpacked"))
+: d_points(initData(&d_points,"points","points"))
+, d_radius(initData(&d_radius,"radius","radius"))
+, d_labels(initData(&d_labels,"labels","labels"))
+, d_groups(initData(&d_groups,"groups","groups"))
+, d_owners(initData(&d_owners,"owners","owner"))
+, d_enableRadius(initData(&d_enableRadius,true,"enableRadius","If false, the radius will not be either packed or unpacked"))
+, d_enableLabels(initData(&d_enableLabels,true,"enableLabels","If false, the labels will not be either packed or unpacked"))
+, d_enableGroups(initData(&d_enableGroups,true,"enableGroups","If false, the groups will not be either packed or unpacked"))
+, d_enableOwners(initData(&d_enableOwners,true,"enableOwners","If false, the owners will not be either packed or unpacked"))
 {
 
 }
