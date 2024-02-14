@@ -18,6 +18,8 @@ if(NOT OpenIGTLink_FOUND )
                 GIT_REPOSITORY https://github.com/openigtlink/OpenIGTLink
                 GIT_TAG master
         )
+
+        set(BUILD_SHARED_LIBS ON CACHE BOOL "FORCE VALUE" FORCE)
         FetchContent_MakeAvailable(OpenIGTLink)
 endif()
 
