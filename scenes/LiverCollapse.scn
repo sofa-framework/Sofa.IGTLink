@@ -29,7 +29,7 @@
     <RequiredPlugin name="Sofa.Component.Topology.Container.Constant"/> <!-- Needed to use components [MeshTopology] -->
     <RequiredPlugin name="Sofa.Component.Topology.Mapping"/> <!-- Needed to use components [Tetra2TriangleTopologicalMapping] -->
 
-    <RequiredPlugin name="SofaSlicer"/> <!-- Needed to use components [OglModel] -->
+    <RequiredPlugin name="SofaIGTLink"/> <!-- Needed to use components [OglModel] -->
 
     <VisualStyle displayFlags="showVisualModels showForceFields" />
     <BackgroundSetting color="0.8 0.8 0.8 1" />
