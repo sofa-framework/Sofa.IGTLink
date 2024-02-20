@@ -10,7 +10,7 @@ find_package(Sofa.Component.Topology REQUIRED) # Needed to use SofaCore, SofaHel
 find_package(Sofa.Component.StateContainer REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Threads REQUIRED)
 
-find_package(OpenIGTLink QUIET) # Needed to use SofaCore, SofaHelper and SofaDefaultType
+find_package(OpenIGTLink REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 if(NOT OpenIGTLink_FOUND )
         message("SofaIGTLink: DEPENDENCY OpenIGTLink NOT FOUND, fetching OpenIGTLink...")
         include(FetchContent)
