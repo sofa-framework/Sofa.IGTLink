@@ -50,7 +50,7 @@
 <!--        <ConstantSparsityPatternSystem template="CompressedRowSparseMatrixf" name="A" printLog="false"/>-->
         <SparseLDLSolver name="precond" template="CompressedRowSparseMatrixf"  parallelInverseProduct="true"  _linearSystem="@A"/>
 
-        <MeshVTKLoader name="loader" filename="right-long-mesh-low.vtk"  />
+        <MeshVTKLoader name="loader" filename="right-lung-mesh-low.vtk"  />
         <TetrahedronSetTopologyContainer name="Container" src="@loader" />
         <TetrahedronSetTopologyModifier name="Modifier"/>
         <MechanicalObject name="mstate" template="Vec3f" />
