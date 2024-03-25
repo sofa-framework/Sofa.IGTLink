@@ -71,70 +71,33 @@ jobs:
           name: SofaIGTLink_{{ steps.sofa.outputs.run_branch }}_for-SOFA-${{ steps.sofa.outputs.sofa_version }}_${{ runner.os }}
           path: ${{ env.WORKSPACE_ARTIFACT_PATH }}
 
-      #- name: Set env vars for tests
-        #shell: bash
-        #run: |
-          ## Set env vars for tests
-          #if [[ "$RUNNER_OS" == "Windows" ]]; then
-            #echo "$(cd $WORKSPACE_ARTIFACT_PATH/lib && pwd -W)" >> $GITHUB_PATH
-            #echo "$(cd $WORKSPACE_ARTIFACT_PATH/bin && pwd -W)" >> $GITHUB_PATH
-          #elif [[ "$RUNNER_OS" == "macOS" ]]; then
-            #echo "DYLD_LIBRARY_PATH=$WORKSPACE_ARTIFACT_PATH/lib:$SOFA_ROOT/lib:$DYLD_LIBRARY_PATH" | tee -a $GITHUB_ENV
-          #fi
-          #echo "LD_LIBRARY_PATH=$WORKSPACE_ARTIFACT_PATH/lib:$SOFA_ROOT/lib:$LD_LIBRARY_PATH" | tee -a $GITHUB_ENV
-          ## Add execution right on the tests
-          #chmod +x $WORKSPACE_BUILD_PATH/bin/*_test${{ steps.sofa.outputs.exe }}
+  deploy:
+    name: Deploy artifacts
+    if: always() && startsWith(github.ref, 'refs/heads/') # we are on a branch (not a PR)
+    needs: [build-and-test]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Get artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
 
-      #- name: Check environment for tests
-        #shell: bash
-        #run: |
-          #echo '------ ls -la "$WORKSPACE_SRC_PATH" ------'
-          #ls -la "$WORKSPACE_SRC_PATH"
-          #echo '------ ls -la "$WORKSPACE_BUILD_PATH" ------'
-          #ls -la "$WORKSPACE_BUILD_PATH"
-          #echo '------ ls -la "$WORKSPACE_INSTALL_PATH" ------'
-          #ls -la "$WORKSPACE_INSTALL_PATH"
-          #echo '------ ls -la "$WORKSPACE_ARTIFACT_PATH" ------'
-          #ls -la "$WORKSPACE_ARTIFACT_PATH"
-          #echo '----------------------'
-          #echo "SOFA_ROOT = $SOFA_ROOT"=
-          #echo '----------------------'
-          #python -c "import sys; print('sys.version = ' + str(sys.version)); print('sys.path = ' + str(sys.path))"
-
-      #- name: Run tests
-        #if: always()
-        #shell: bash
-        #run: |
-          #cd $WORKSPACE_BUILD_PATH
-          #./bin/SofaIGTLink_test${{ steps.sofa.outputs.exe }}
-
-    deploy:
-      name: Deploy artifacts
-      if: always() && startsWith(github.ref, 'refs/heads/') # we are on a branch (not a PR)
-      needs: [build-and-test]
-      runs-on: ubuntu-latest
-      continue-on-error: true
-      steps:
-        - name: Get artifacts
-          uses: actions/download-artifact@v2
-          with:
-            path: artifacts
-
-        - name: Zip artifacts
-          shell: bash
-          run: |
-            cd $GITHUB_WORKSPACE/artifacts
-            for artifact in *; do
-              zip $artifact.zip -r $artifact/*
-            done
-        - name: Upload release
-          uses: softprops/action-gh-release@v1
-          with:
-            name: ${{ github.ref_name }}
-            tag_name: release-${{ github.ref_name }}
-            fail_on_unmatched_files: false
-            target_commitish: ${{ github.ref_name }}
-            files: |
-              artifacts/SofaIGTLink_*_Linux.zip
-              artifacts/SofaIGTLink_*_Windows.zip
-              artifacts/SofaIGTLink_*_macOS.zip
+      - name: Zip artifacts
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE/artifacts
+          for artifact in *; do
+            zip $artifact.zip -r $artifact/*
+          done
+      - name: Upload release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ github.ref_name }}
+          tag_name: release-${{ github.ref_name }}
+          fail_on_unmatched_files: false
+          target_commitish: ${{ github.ref_name }}
+          files: |
+            artifacts/SofaIGTLink_*_Linux.zip
+            artifacts/SofaIGTLink_*_Windows.zip
+            artifacts/SofaIGTLink_*_macOS.zip
