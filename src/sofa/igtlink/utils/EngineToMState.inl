@@ -1,15 +1,15 @@
 #pragma once
 
-#include <SofaIGTLink/utils/EngineToMState.h>
+#include <sofa/igtlink/utils/EngineToMState.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/type/Quat.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
 #include <sofa/component/statecontainer/MechanicalObject.h>
 
 
-namespace sofa {
 
-namespace registrationcst {
+
+namespace sofa::openigtlink {
 
 using namespace core::behavior;
 using namespace sofa::type;
@@ -80,5 +80,5 @@ void EngineToMState<DataTypes>::handleEvent(sofa::core::objectmodel::Event *even
 
 }
 
-}
+
 }

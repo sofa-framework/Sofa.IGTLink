@@ -7,12 +7,12 @@
 #include <igtlOSUtil.h>
 #include <igtlPointMessage.h>
 #include <igtlServerSocket.h>
-#include <SofaIGTLink/sockets/iGTLinkBase.h>
-#include <SofaIGTLink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/sockets/iGTLinkBase.h>
+#include <sofa/igtlink/messages/iGTLinkMessage.h>
 
 using namespace sofa::core::objectmodel;
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     class iGTLinkServer : public iGTLinkBase
     {

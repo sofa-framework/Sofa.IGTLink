@@ -5,11 +5,11 @@
 
 #include <igtlOSUtil.h>
 #include <igtlPointMessage.h>
-#include <SofaIGTLink/sockets/iGTLinkBase.h>
+#include <sofa/igtlink/sockets/iGTLinkBase.h>
 
 using namespace sofa::core::objectmodel;
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     class iGTLinkClient : public iGTLinkBase
     {

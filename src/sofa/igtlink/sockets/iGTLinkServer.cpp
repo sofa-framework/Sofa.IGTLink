@@ -1,9 +1,9 @@
 #define SOFASLICER_IGTServer_CPP
 
 #include <sofa/core/ObjectFactory.h>
-#include <SofaIGTLink/sockets/iGTLinkServer.inl>
+#include <sofa/igtlink/sockets/iGTLinkServer.inl>
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
 
     static int iGTLinkServerClass = sofa::core::RegisterObject("iGTLink Server wrapper")

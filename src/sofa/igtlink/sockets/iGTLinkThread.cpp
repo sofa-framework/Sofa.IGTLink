@@ -1,9 +1,9 @@
-#include <SofaIGTLink/sockets/iGTLinkBase.h>
-#include <SofaIGTLink/sockets/iGTLinkThread.h>
+#include <sofa/igtlink/sockets/iGTLinkBase.h>
+#include <sofa/igtlink/sockets/iGTLinkThread.h>
 #include <igtlPointMessage.h>
 #include <igtlPolyDataMessage.h>
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
 
 

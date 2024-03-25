@@ -1,8 +1,8 @@
 #pragma once
-#include <SofaIGTLink/sockets/iGTLinkClient.h>
+#include <sofa/igtlink/sockets/iGTLinkClient.h>
 
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
 
 iGTLinkClient::iGTLinkClient()

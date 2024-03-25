@@ -1,9 +1,9 @@
-#include <SofaIGTLink/sockets/iGTLinkBase.h>
-#include <SofaIGTLink/messages/iGTLinkMessage.h>
-#include <SofaIGTLink/sockets/iGTLinkThread.h>
+#include <sofa/igtlink/sockets/iGTLinkBase.h>
+#include <sofa/igtlink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/sockets/iGTLinkThread.h>
 
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     iGTLinkBase::iGTLinkBase()
     : d_timeout(initData(&d_timeout,-1,"timeout","Timeout in milliseconds"))

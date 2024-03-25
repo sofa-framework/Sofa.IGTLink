@@ -5,13 +5,13 @@
 #include <memory>
 #include <atomic>
 #include <mutex>
-#include <SofaIGTLink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/messages/iGTLinkMessage.h>
 #include <sofa/core/objectmodel/Data.h>
 
 class iGTLinkBase;
 using namespace sofa::core::objectmodel;
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     class iGTLinkBaseThread
     {

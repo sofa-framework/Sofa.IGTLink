@@ -15,9 +15,7 @@
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/objectmodel/DataCallback.h>
 
-namespace sofa {
-
-namespace registrationcst {
+namespace sofa::openigtlink {
 
 template<class DataTypes>
 class EngineToMState : public core::objectmodel::BaseObject {
@@ -45,4 +43,3 @@ public :
 
 }
 
-}

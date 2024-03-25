@@ -8,6 +8,7 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 find_package(Sofa.Framework REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Sofa.Component.Topology REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Sofa.Component.StateContainer REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
+find_package(Sofa.GUI.Component REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 find_package(Threads REQUIRED)
 
 find_package(OpenIGTLink QUIET) # Needed to use SofaCore, SofaHelper and SofaDefaultType
@@ -34,7 +35,7 @@ file(GLOB_RECURSE SOURCE_FILES
 
 # SOFA plugin are basically libraries
 add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME} Sofa.Framework Sofa.Component.Topology Sofa.Component.StateContainer OpenIGTLink Threads::Threads)
+target_link_libraries(${PROJECT_NAME} Sofa.Framework Sofa.Component.Topology Sofa.Component.StateContainer OpenIGTLink Threads::Threads Sofa.GUI.Component)
 include_directories(src)
 
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SofaIGTLink/utils/UserInteractionController.h>
+#include <sofa/igtlink/utils/UserInteractionController.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/type/Quat.h>
 #include <sofa/core/ObjectFactory.h>
@@ -11,7 +11,7 @@
 #include <Eigen/SVD>
 #include <sofa/helper/AdvancedTimer.h>
 
-namespace SofaSlicer {
+namespace sofa::openigtlink {
 
 
 UserInteractionController::UserInteractionController()

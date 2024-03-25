@@ -1,11 +1,11 @@
 #pragma once
-#include <SofaIGTLink/sockets/iGTLinkServer.h>
+#include <sofa/igtlink/sockets/iGTLinkServer.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
-#include <SofaIGTLink/sockets/iGTLinkThread.h>
+#include <sofa/igtlink/sockets/iGTLinkThread.h>
 #include <map>
 
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
 
 iGTLinkServer::iGTLinkServer()

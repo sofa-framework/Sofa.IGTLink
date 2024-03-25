@@ -1,11 +1,11 @@
 #pragma once
 
-#include <SofaIGTLink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/messages/iGTLinkMessage.h>
 #include <sofa/core/topology/BaseMeshTopology.h>
 #include <igtlPolyDataMessage.h>
 
 using namespace sofa::core::objectmodel;
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     template<class DataType>
     class iGTLinkPolyDataMessage : public iGTLinkMessage

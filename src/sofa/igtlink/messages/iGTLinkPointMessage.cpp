@@ -1,11 +1,11 @@
 #pragma once
 
 #include "sofa/core/ObjectFactory.h"
-#include <SofaIGTLink/messages/iGTLinkPointMessage.h>
+#include <sofa/igtlink/messages/iGTLinkPointMessage.h>
 #include <igtlPointMessage.h>
 
 using namespace sofa::core::objectmodel;
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
 template<class DataType>
 iGTLinkPointMessage<DataType>::iGTLinkPointMessage()

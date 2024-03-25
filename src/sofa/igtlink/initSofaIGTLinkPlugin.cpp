@@ -17,13 +17,13 @@ extern "C"
         }
     }
 
-    const char* getModuleName() { return "SofaSlicer"; }
+    const char* getModuleName() { return "SofaIGTLink"; }
 
     const char* getModuleVersion() { return "0.0"; }
 
     const char* getModuleLicense() { return "Private"; }
 
-    const char* getModuleDescription() { return "Sofa integration to Slicer"; }
+    const char* getModuleDescription() { return "Bridge from SOFA to IGTLink"; }
 
     const char* getModuleComponentList()
     {

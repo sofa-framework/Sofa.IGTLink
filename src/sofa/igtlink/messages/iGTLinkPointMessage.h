@@ -1,9 +1,9 @@
 #pragma once
 
-#include <SofaIGTLink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/messages/iGTLinkMessage.h>
 
 using namespace sofa::core::objectmodel;
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     template<class DataType>
     class iGTLinkPointMessage : public iGTLinkMessage

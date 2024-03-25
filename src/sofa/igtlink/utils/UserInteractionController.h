@@ -9,7 +9,7 @@
 
 using namespace sofa::core::objectmodel;
 
-namespace SofaSlicer {
+namespace sofa::openigtlink {
 
 class UserInteractionController : public BaseObject {
 public :

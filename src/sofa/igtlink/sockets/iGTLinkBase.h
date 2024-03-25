@@ -8,7 +8,7 @@
 
 using namespace sofa::core::objectmodel;
 
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
     class iGTLinkMessageBase;
     class iGTLinkReceiverThread;

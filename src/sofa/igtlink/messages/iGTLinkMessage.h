@@ -6,11 +6,11 @@
 #include "sofa/core/objectmodel/Link.h"
 #include "sofa/core/objectmodel/DataCallback.h"
 #include <igtlMessageBase.h>
-#include <SofaIGTLink/sockets/iGTLinkBase.h>
+#include <sofa/igtlink/sockets/iGTLinkBase.h>
 
 
 using namespace sofa::core::objectmodel;
-namespace SofaSlicer::openigtlink
+namespace sofa::openigtlink
 {
 
     class iGTLinkMessageBase : public BaseObject
