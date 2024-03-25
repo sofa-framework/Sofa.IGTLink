@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 project(SofaIGTLink VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
-add_compile_options(-Wall -Wextra -Wpedantic)
-
+if(CMAKE_COMPILER_IS_GNUCXX)
+        add_compile_options(-Wall -Wextra -Wpedantic)
+endif(CMAKE_COMPILER_IS_GNUCXX)
 
 # SOFA packages containing our dependencies
 find_package(Sofa.Framework REQUIRED) # Needed to use SofaCore, SofaHelper and SofaDefaultType
