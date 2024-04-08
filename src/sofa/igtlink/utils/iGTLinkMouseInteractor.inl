@@ -48,12 +48,17 @@ void iGTLinkMouseInteractor::positionChanged()
 void iGTLinkMouseInteractor::attachmentChanged()
 {
     if(m_performer)
+    {
         m_performer->clear();
+    }
     if(d_pickingType.getValue().getSelectedItem() == std::string("constraint"))
+    {
         m_performer.reset(new sofa::gui::component::performer::ConstraintAttachBodyPerformer<defaulttype::Vec3Types>(this));
+    }
     else
+    {
         m_performer.reset(new sofa::gui::component::performer::AttachBodyPerformer<defaulttype::Vec3Types>(this));
-
+    }
 }
 
 
@@ -72,12 +77,14 @@ void iGTLinkMouseInteractor::startPerformer()
     bodyPicked.indexCollisionElement = findCollidingElem(d_positions.getValue()[0]);
     bodyPicked.mstate = l_destCollisionModel->getContext()->get<sofa::core::behavior::BaseMechanicalState>();
     bodyPicked.point = d_positions.getValue()[0];
-//    bodyPicked.body = l_destCollisionModel.get();
+    bodyPicked.body = l_destCollisionModel.get();
     this->setBodyPicked(bodyPicked);
     this->setMouseAttached(true);
 
     m_performer->start_partial(bodyPicked);
-
+    m_performer->getInteractionObject()->init();
+    m_performer->getInteractionObject()->bwdInit();
+    m_performer->getInteractionObject()->f_listening.setValue(true);
     m_performerStarted = true;
 }
 
