@@ -18,11 +18,16 @@
 
 namespace sofa::openigtlink {
 
-class iGTLinkMouseInteractor : public sofa::gui::component::performer::MouseInteractor<defaulttype::Vec3Types> {
+template<class DataTypes>
+class iGTLinkMouseInteractor : public sofa::gui::component::performer::MouseInteractor<DataTypes> {
 public:
-    SOFA_CLASS(iGTLinkMouseInteractor, SOFA_TEMPLATE(sofa::gui::component::performer::MouseInteractor, defaulttype::Vec3Types));
+    SOFA_CLASS(SOFA_TEMPLATE(iGTLinkMouseInteractor,DataTypes), SOFA_TEMPLATE(sofa::gui::component::performer::MouseInteractor,DataTypes));
 
-    Data<sofa::type::vector<type::Vec3> > d_positions;
+    typedef typename DataTypes::Coord Coord;
+    typedef typename DataTypes::VecCoord VecCoord;
+
+
+    Data<sofa::type::vector<Coord> > d_positions;
     Data< sofa::helper::OptionsGroup > d_pickingType;
     Data< double > d_springStiffness;
     Data< unsigned > d_reactionTime;
@@ -46,7 +51,7 @@ private:
     sofa::core::objectmodel::DataCallback c_positions;
     sofa::core::objectmodel::DataCallback c_attachmentType;
     std::chrono::high_resolution_clock::time_point m_lastChange;
-    std::unique_ptr<sofa::gui::component::performer::BaseAttachBodyPerformer> m_performer;
+    std::unique_ptr<sofa::gui::component::performer::BaseAttachBodyPerformer<DataTypes>> m_performer;
 
     bool m_performerStarted;
 

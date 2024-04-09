@@ -5,6 +5,7 @@
 #include <sofa/simulation/AnimateEndEvent.h>
 #include <sofa/gui/component/performer/ConstraintAttachBodyPerformer.h>
 #include <sofa/gui/component/performer/AttachBodyPerformer.h>
+#include <sofa/gui/component/performer/BaseAttachBodyPerformer.inl>
 #include <sofa/component/collision/geometry/LineModel.h>
 #include <sofa/component/collision/geometry/TriangleModel.h>
 #include <sofa/component/collision/geometry/PointModel.h>
@@ -13,7 +14,8 @@
 namespace sofa::openigtlink
 {
 
-iGTLinkMouseInteractor::iGTLinkMouseInteractor()
+template<class DataTypes>
+iGTLinkMouseInteractor<DataTypes>::iGTLinkMouseInteractor()
 : d_pickingType(initData(&d_pickingType,"pickingType","Mouse interaction type, could be \'constraint\' or \'spring\'"))
 , d_positions(initData(&d_positions, "position", "Position"))
 , d_springStiffness(initData(&d_springStiffness,10.0,"springStiffness","Stiffness of attachment spring used for interaction"))
@@ -40,12 +42,14 @@ iGTLinkMouseInteractor::iGTLinkMouseInteractor()
 }
 
 
-void iGTLinkMouseInteractor::positionChanged()
+template<class DataTypes>
+void iGTLinkMouseInteractor<DataTypes>::positionChanged()
 {
     m_lastChange = std::chrono::high_resolution_clock::now();
 }
 
-void iGTLinkMouseInteractor::attachmentChanged()
+template<class DataTypes>
+void iGTLinkMouseInteractor<DataTypes>::attachmentChanged()
 {
     if(m_performer)
     {
@@ -53,35 +57,36 @@ void iGTLinkMouseInteractor::attachmentChanged()
     }
     if(d_pickingType.getValue().getSelectedItem() == std::string("constraint"))
     {
-        m_performer.reset(new sofa::gui::component::performer::ConstraintAttachBodyPerformer<defaulttype::Vec3Types>(this));
+        m_performer.reset(new sofa::gui::component::performer::ConstraintAttachBodyPerformer<DataTypes>(this));
     }
     else
     {
-        m_performer.reset(new sofa::gui::component::performer::AttachBodyPerformer<defaulttype::Vec3Types>(this));
+        m_performer.reset(new sofa::gui::component::performer::AttachBodyPerformer<DataTypes>(this));
     }
 }
 
-
-void iGTLinkMouseInteractor::updatePosition( SReal dt)
+template<class DataTypes>
+void iGTLinkMouseInteractor<DataTypes>::updatePosition( SReal dt)
 {
     SOFA_UNUSED(dt);
     //Do nothing, see handleEvent
 }
 
-void iGTLinkMouseInteractor::startPerformer()
+template<class DataTypes>
+void iGTLinkMouseInteractor<DataTypes>::startPerformer()
 {
     if(!m_performer || m_performerStarted || !d_positions.getValue().size())
         return;
 
     sofa::gui::component::performer::BodyPicked bodyPicked;
     bodyPicked.indexCollisionElement = findCollidingElem(d_positions.getValue()[0]);
-    bodyPicked.mstate = l_destCollisionModel->getContext()->get<sofa::core::behavior::BaseMechanicalState>();
+    bodyPicked.mstate = l_destCollisionModel->getContext()->template get<sofa::core::behavior::BaseMechanicalState>();
     bodyPicked.point = d_positions.getValue()[0];
     bodyPicked.body = l_destCollisionModel.get();
     this->setBodyPicked(bodyPicked);
     this->setMouseAttached(true);
 
-    m_performer->start_partial(bodyPicked);
+    m_performer->startPartial(bodyPicked);
     m_performer->getInteractionObject()->init();
     m_performer->getInteractionObject()->bwdInit();
     m_performer->getInteractionObject()->f_listening.setValue(true);
@@ -89,7 +94,8 @@ void iGTLinkMouseInteractor::startPerformer()
 }
 
 
-void iGTLinkMouseInteractor::stopPerformer()
+template<class DataTypes>
+void iGTLinkMouseInteractor<DataTypes>::stopPerformer()
 {
     if(!m_performer || !m_performerStarted)
         return;
@@ -99,15 +105,16 @@ void iGTLinkMouseInteractor::stopPerformer()
     m_performerStarted = false;
 }
 
-sofa::Index iGTLinkMouseInteractor::findCollidingElem(const type::Vec3& pos) const
+template<class DataTypes>
+sofa::Index iGTLinkMouseInteractor<DataTypes>::findCollidingElem(const type::Vec3& pos) const
 {
     sofa::Index closestElem = l_destCollisionModel->begin().getIndex();
     double closestDist = std::numeric_limits<double>::max();
     auto* topo = l_destCollisionModel->getCollisionTopology();
-    auto* mstate = l_destCollisionModel->getContext()->get<sofa::core::behavior::MechanicalState<defaulttype::Vec3Types> >();
-    sofa::helper::ReadAccessor<Data <defaulttype::Vec3Types::VecCoord> > destPositions = mstate->read(core::VecCoordId::position());
+    auto* mstate = l_destCollisionModel->getContext()->template get<sofa::core::behavior::MechanicalState<DataTypes> >();
+    sofa::helper::ReadAccessor<Data <VecCoord> > destPositions = mstate->read(core::VecCoordId::position());
 
-    if(dynamic_cast<sofa::component::collision::geometry::PointCollisionModel<defaulttype::Vec3Types>* >(l_destCollisionModel.get()))
+    if(dynamic_cast<sofa::component::collision::geometry::PointCollisionModel<DataTypes>* >(l_destCollisionModel.get()))
     {
         for(unsigned id = 0; id < destPositions.size(); ++id)
         {
@@ -119,7 +126,7 @@ sofa::Index iGTLinkMouseInteractor::findCollidingElem(const type::Vec3& pos) con
             }
         }
     }
-    else if(dynamic_cast<sofa::component::collision::geometry::LineCollisionModel<defaulttype::Vec3Types>* >(l_destCollisionModel.get()))
+    else if(dynamic_cast<sofa::component::collision::geometry::LineCollisionModel<DataTypes>* >(l_destCollisionModel.get()))
     {
         for(unsigned id = 0; id < topo->getLines().size(); ++id)
         {
@@ -131,7 +138,7 @@ sofa::Index iGTLinkMouseInteractor::findCollidingElem(const type::Vec3& pos) con
             }
         }
     }
-    else if(dynamic_cast<sofa::component::collision::geometry::TriangleCollisionModel<defaulttype::Vec3Types>* >(l_destCollisionModel.get()))
+    else if(dynamic_cast<sofa::component::collision::geometry::TriangleCollisionModel<DataTypes>* >(l_destCollisionModel.get()))
     {
         for(unsigned id = 0; id < topo->getTriangles().size(); ++id)
         {
@@ -147,7 +154,8 @@ sofa::Index iGTLinkMouseInteractor::findCollidingElem(const type::Vec3& pos) con
 }
 
 
-void iGTLinkMouseInteractor::handleEvent(sofa::core::objectmodel::Event *event)
+template<class DataTypes>
+void iGTLinkMouseInteractor<DataTypes>::handleEvent(sofa::core::objectmodel::Event *event)
 {
     if (dynamic_cast<sofa::simulation::AnimateEndEvent*>(event))
     {
@@ -166,7 +174,7 @@ void iGTLinkMouseInteractor::handleEvent(sofa::core::objectmodel::Event *event)
             if(!m_performerStarted)
                 startPerformer();
 
-            auto* mstate = this->getContext()->get<sofa::core::behavior::MechanicalState<defaulttype::Vec3Types> >();
+            auto* mstate = this->getContext()->template get<sofa::core::behavior::MechanicalState<DataTypes> >();
             sofa::helper::WriteAccessor<Data <defaulttype::Vec3Types::VecCoord> > positions = mstate->write(core::VecCoordId::position());
 
             mstate->resize(1);

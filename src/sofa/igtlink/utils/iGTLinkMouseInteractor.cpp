@@ -6,6 +6,6 @@ namespace sofa::openigtlink {
 SOFA_DECL_CLASS(iGTLinkMouseInteractor)
 
 int iGTLinkMouseInteractorClass = core::RegisterObject("")
-                              .add<iGTLinkMouseInteractor>(true);
+                              .add<iGTLinkMouseInteractor<defaulttype::Vec3Types>>(true);
 
 }
