@@ -1,6 +1,6 @@
 #pragma once
 
-#include <sofa/igtlink/utils/iGTLinkMouseInteractor.h>
+#include <sofa/igtlink/utils/PickingInteractor.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
 #include <sofa/simulation/AnimateEndEvent.h>
 #include <sofa/gui/component/performer/ConstraintAttachBodyPerformer.h>
@@ -15,7 +15,7 @@ namespace sofa::openigtlink
 {
 
 template<class DataTypes>
-iGTLinkMouseInteractor<DataTypes>::iGTLinkMouseInteractor()
+PickingInteractor<DataTypes>::PickingInteractor()
 : d_pickingType(initData(&d_pickingType,"pickingType","Mouse interaction type, could be \'constraint\' or \'spring\'"))
 , d_positions(initData(&d_positions, "position", "Position"))
 , d_springStiffness(initData(&d_springStiffness,10.0,"springStiffness","Stiffness of attachment spring used for interaction"))
@@ -31,10 +31,10 @@ iGTLinkMouseInteractor<DataTypes>::iGTLinkMouseInteractor()
     this->f_listening.setValue(true);
 
     c_positions.addInput(&d_positions);
-    c_positions.addCallback(std::bind(&iGTLinkMouseInteractor::positionChanged,this));
+    c_positions.addCallback(std::bind(&PickingInteractor::positionChanged,this));
 
     c_attachmentType.addInput(&d_pickingType);
-    c_attachmentType.addCallback(std::bind(&iGTLinkMouseInteractor::attachmentChanged,this));
+    c_attachmentType.addCallback(std::bind(&PickingInteractor::attachmentChanged,this));
 
     m_lastChange = std::chrono::high_resolution_clock::now();
     //Make sure the constraint is inactive
@@ -43,13 +43,13 @@ iGTLinkMouseInteractor<DataTypes>::iGTLinkMouseInteractor()
 
 
 template<class DataTypes>
-void iGTLinkMouseInteractor<DataTypes>::positionChanged()
+void PickingInteractor<DataTypes>::positionChanged()
 {
     m_lastChange = std::chrono::high_resolution_clock::now();
 }
 
 template<class DataTypes>
-void iGTLinkMouseInteractor<DataTypes>::attachmentChanged()
+void PickingInteractor<DataTypes>::attachmentChanged()
 {
     if(m_performer)
     {
@@ -66,14 +66,14 @@ void iGTLinkMouseInteractor<DataTypes>::attachmentChanged()
 }
 
 template<class DataTypes>
-void iGTLinkMouseInteractor<DataTypes>::updatePosition( SReal dt)
+void PickingInteractor<DataTypes>::updatePosition( SReal dt)
 {
     SOFA_UNUSED(dt);
     //Do nothing, see handleEvent
 }
 
 template<class DataTypes>
-void iGTLinkMouseInteractor<DataTypes>::startPerformer()
+void PickingInteractor<DataTypes>::startPerformer()
 {
     if(!m_performer || m_performerStarted || !d_positions.getValue().size())
         return;
@@ -95,7 +95,7 @@ void iGTLinkMouseInteractor<DataTypes>::startPerformer()
 
 
 template<class DataTypes>
-void iGTLinkMouseInteractor<DataTypes>::stopPerformer()
+void PickingInteractor<DataTypes>::stopPerformer()
 {
     if(!m_performer || !m_performerStarted)
         return;
@@ -106,7 +106,7 @@ void iGTLinkMouseInteractor<DataTypes>::stopPerformer()
 }
 
 template<class DataTypes>
-sofa::Index iGTLinkMouseInteractor<DataTypes>::findCollidingElem(const type::Vec3& pos) const
+sofa::Index PickingInteractor<DataTypes>::findCollidingElem(const type::Vec3& pos) const
 {
     sofa::Index closestElem = l_destCollisionModel->begin().getIndex();
     double closestDist = std::numeric_limits<double>::max();
@@ -155,7 +155,7 @@ sofa::Index iGTLinkMouseInteractor<DataTypes>::findCollidingElem(const type::Vec
 
 
 template<class DataTypes>
-void iGTLinkMouseInteractor<DataTypes>::handleEvent(sofa::core::objectmodel::Event *event)
+void PickingInteractor<DataTypes>::handleEvent(sofa::core::objectmodel::Event *event)
 {
     if (dynamic_cast<sofa::simulation::AnimateEndEvent*>(event))
     {

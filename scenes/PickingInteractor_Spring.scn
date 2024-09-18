@@ -92,7 +92,7 @@
         <PointSetTopologyContainer name="Container" />
         <PointSetTopologyModifier name="Modifier"/>
         <MechanicalObject name="mstate" template="Vec3d"  drawMode="2" showObjectScale="0.01" showObject="false"/>
-        <iGTLinkMouseInteractor pickingType="spring" reactionTime="20000" destCollisionModel="@../FEM/Surface/Torus8CMT"/>
+        <PickingInteractor pickingType="spring" reactionTime="20000" destCollisionModel="@../FEM/Surface/Torus8CMT"/>
 
     </Node>
 
