@@ -19,9 +19,9 @@
 namespace sofa::openigtlink {
 
 template<class DataTypes>
-class iGTLinkMouseInteractor : public sofa::gui::component::performer::MouseInteractor<DataTypes> {
+class PickingInteractor : public sofa::gui::component::performer::MouseInteractor<DataTypes> {
 public:
-    SOFA_CLASS(SOFA_TEMPLATE(iGTLinkMouseInteractor,DataTypes), SOFA_TEMPLATE(sofa::gui::component::performer::MouseInteractor,DataTypes));
+    SOFA_CLASS(SOFA_TEMPLATE(PickingInteractor,DataTypes), SOFA_TEMPLATE(sofa::gui::component::performer::MouseInteractor,DataTypes));
 
     typedef typename DataTypes::Coord Coord;
     typedef typename DataTypes::VecCoord VecCoord;
@@ -32,10 +32,10 @@ public:
     Data< double > d_springStiffness;
     Data< unsigned > d_reactionTime;
 
-    SingleLink<iGTLinkMouseInteractor, core::CollisionModel, BaseLink::FLAG_STOREPATH | BaseLink::FLAG_STRONGLINK> l_destCollisionModel;
+    SingleLink<PickingInteractor, core::CollisionModel, BaseLink::FLAG_STOREPATH | BaseLink::FLAG_STRONGLINK> l_destCollisionModel;
 
 
-    iGTLinkMouseInteractor();
+    PickingInteractor();
 
     virtual void updatePosition( SReal dt) override;
 
