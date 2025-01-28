@@ -37,7 +37,9 @@ PickingInteractor<DataTypes>::PickingInteractor()
     c_attachmentType.addCallback(std::bind(&PickingInteractor::attachmentChanged,this));
 
     m_lastChange = std::chrono::high_resolution_clock::now();
-    //Make sure the constraint is inactive
+
+    if(l_destCollisionModel.get() == nullptr)
+        msg_error(this)<<"Input Collision model is not correctly set. Please input a valid link to the collision model you want to pick.";
 
 }
 
@@ -112,7 +114,7 @@ sofa::Index PickingInteractor<DataTypes>::findCollidingElem(const type::Vec3& po
     double closestDist = std::numeric_limits<double>::max();
     auto* topo = l_destCollisionModel->getCollisionTopology();
     auto* mstate = l_destCollisionModel->getContext()->template get<sofa::core::behavior::MechanicalState<DataTypes> >();
-    sofa::helper::ReadAccessor<Data <VecCoord> > destPositions = mstate->read(core::VecCoordId::position());
+    sofa::helper::ReadAccessor<Data <VecCoord> > destPositions = mstate->read(core::vec_id::read_access::position);
 
     if(dynamic_cast<sofa::component::collision::geometry::PointCollisionModel<DataTypes>* >(l_destCollisionModel.get()))
     {
@@ -159,6 +161,13 @@ void PickingInteractor<DataTypes>::handleEvent(sofa::core::objectmodel::Event *e
 {
     if (dynamic_cast<sofa::simulation::AnimateEndEvent*>(event))
     {
+        if(l_destCollisionModel.get() == nullptr)
+        {
+            msg_error(this)<<"Input Collision model is not correctly set. Please input a valid link to the collision model you want to pick.";
+            return;
+        }
+
+
         if(!m_performer)
             attachmentChanged();
 
@@ -175,7 +184,7 @@ void PickingInteractor<DataTypes>::handleEvent(sofa::core::objectmodel::Event *e
                 startPerformer();
 
             auto* mstate = this->getContext()->template get<sofa::core::behavior::MechanicalState<DataTypes> >();
-            sofa::helper::WriteAccessor<Data <defaulttype::Vec3Types::VecCoord> > positions = mstate->write(core::VecCoordId::position());
+            sofa::helper::WriteAccessor<Data <defaulttype::Vec3Types::VecCoord> > positions = mstate->write(core::vec_id::write_access::position);
 
             mstate->resize(1);
 

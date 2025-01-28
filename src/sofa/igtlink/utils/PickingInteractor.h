@@ -19,6 +19,22 @@
 
 namespace sofa::openigtlink {
 
+/**
+*  \brief This object is used to enable random picking of an object using either
+ *  lagrangian multipliers or springs.
+ *
+ *  The input position is used to find the closest point on the collision model
+ *  (link "destCollisionModel").
+ *  This closest point is then used to attach the object to the input point.
+ *  This interaction is active and follows the input without updating the
+ *  projection on the surface until no update of the input is received for
+ *  "reactionTime" milliseconds.
+ *
+ *  When "reactionTime" milliseconds has passed without an update of the input,
+ *  the interaction is deactivated and next time the input is updated, a new
+ *  closest point will be found to attach the object
+*
+ */
 template<class DataTypes>
 class SOFA_IGTLINK_API PickingInteractor : public sofa::gui::component::performer::MouseInteractor<DataTypes> {
 public:

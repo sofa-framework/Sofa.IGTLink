@@ -51,9 +51,9 @@ void EngineToMState<DataTypes>::applyTopologyChanges() {
     if (l_state == NULL) return;
     if (!this->getContext()->isActive()) return;
 
-    helper::WriteAccessor<Data <VecCoord> > X = *l_state->write(core::VecCoordId::position());
-    helper::WriteAccessor<Data <VecCoord> > Xfree = *l_state->write(core::VecCoordId::freePosition());
-    helper::WriteAccessor<Data <VecCoord> > X0 = *l_state->write(core::VecCoordId::restPosition());
+    helper::WriteAccessor<Data <VecCoord> > X = *l_state->write(core::vec_id::write_access::position);
+    helper::WriteAccessor<Data <VecCoord> > Xfree = *l_state->write(core::vec_id::write_access::freePosition);
+    helper::WriteAccessor<Data <VecCoord> > X0 = *l_state->write(core::vec_id::write_access::restPosition);
 
     l_state->resize(d_positions.getValue().size());
 
