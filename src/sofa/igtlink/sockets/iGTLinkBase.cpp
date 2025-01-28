@@ -18,8 +18,11 @@ namespace sofa::openigtlink
 
     iGTLinkBase::~iGTLinkBase()
     {
-        m_receiverThread ->stopThread();
-        delete m_receiverThread;
+        if (m_receiverThread)
+        {
+            m_receiverThread ->stopThread();
+            delete m_receiverThread;
+        }
     }
 
     void iGTLinkBase::addMessageObject(iGTLinkMessageBase *_object)
@@ -86,7 +89,9 @@ namespace sofa::openigtlink
     {
         if(sofa::simulation::AnimateBeginEvent::checkEventType(event))
         {
-            if(d_componentState.getValue()!=ComponentState::Valid)
+            // If we are not a sender, then we let the thread deal with connexions to avoid having
+            // to slow everything with mutex
+            if(d_sender.getValue() && d_componentState.getValue()!=ComponentState::Valid)
             {
                 if(!tryConnect()) return;
             }
