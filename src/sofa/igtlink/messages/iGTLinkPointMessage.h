@@ -1,12 +1,13 @@
 #pragma once
 
 #include <sofa/igtlink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/config.h>
 
 using namespace sofa::core::objectmodel;
 namespace sofa::openigtlink
 {
     template<class DataType>
-    class iGTLinkPointMessage : public iGTLinkMessage
+    class SOFA_IGTLINK_API iGTLinkPointMessage : public iGTLinkMessage
     {
         typedef typename DataType::Coord Vec3;
     public:

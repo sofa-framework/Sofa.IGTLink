@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(SofaIGTLink VERSION 1.0)
+project(Sofa.IGTLink VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 if(CMAKE_COMPILER_IS_GNUCXX)
         add_compile_options(-Wall -Wextra -Wpedantic)
@@ -14,7 +14,7 @@ find_package(Threads REQUIRED)
 
 find_package(OpenIGTLink QUIET) # Needed to use SofaCore, SofaHelper and SofaDefaultType
 if(NOT OpenIGTLink_FOUND )
-        message("SofaIGTLink: DEPENDENCY OpenIGTLink NOT FOUND, fetching OpenIGTLink...")
+        message("Sofa.IGTLink: DEPENDENCY OpenIGTLink NOT FOUND, fetching OpenIGTLink...")
         include(FetchContent)
         FetchContent_Declare(OpenIGTLink
                 GIT_REPOSITORY https://github.com/openigtlink/OpenIGTLink
@@ -26,6 +26,7 @@ if(NOT OpenIGTLink_FOUND )
 endif()
 
 file(GLOB_RECURSE HEADER_FILES
+        "src/*.h.in"
         "src/*.h"
         "src/*.inl"
         )
@@ -37,7 +38,9 @@ file(GLOB_RECURSE SOURCE_FILES
 # SOFA plugin are basically libraries
 add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} Sofa.Framework Sofa.Component.Topology Sofa.Component.StateContainer OpenIGTLink Threads::Threads Sofa.GUI.Component)
+target_include_directories(${PROJECT_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>")
 include_directories(src)
+
 
 
 sofa_create_package_with_targets(

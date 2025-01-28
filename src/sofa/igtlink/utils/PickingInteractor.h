@@ -14,12 +14,13 @@
 #include <sofa/core/objectmodel/DataCallback.h>
 #include <sofa/core/CollisionModel.h>
 #include <chrono>
+#include <sofa/igtlink/config.h>
 
 
 namespace sofa::openigtlink {
 
 template<class DataTypes>
-class PickingInteractor : public sofa::gui::component::performer::MouseInteractor<DataTypes> {
+class SOFA_IGTLINK_API PickingInteractor : public sofa::gui::component::performer::MouseInteractor<DataTypes> {
 public:
     SOFA_CLASS(SOFA_TEMPLATE(PickingInteractor,DataTypes), SOFA_TEMPLATE(sofa::gui::component::performer::MouseInteractor,DataTypes));
 

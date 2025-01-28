@@ -14,11 +14,12 @@
 
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/objectmodel/DataCallback.h>
+#include <sofa/igtlink/config.h>
 
 namespace sofa::openigtlink {
 
 template<class DataTypes>
-class EngineToMState : public core::objectmodel::BaseObject {
+class SOFA_IGTLINK_API EngineToMState : public core::objectmodel::BaseObject {
 public :
 
     typedef typename DataTypes::Coord Coord;

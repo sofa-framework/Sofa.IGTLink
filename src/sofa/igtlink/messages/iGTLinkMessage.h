@@ -7,13 +7,14 @@
 #include "sofa/core/objectmodel/DataCallback.h"
 #include <igtlMessageBase.h>
 #include <sofa/igtlink/sockets/iGTLinkBase.h>
+#include <sofa/igtlink/config.h>
 
 
 using namespace sofa::core::objectmodel;
 namespace sofa::openigtlink
 {
 
-    class iGTLinkMessageBase : public BaseObject
+    class SOFA_IGTLINK_API iGTLinkMessageBase : public BaseObject
     {
     public:
         SOFA_CLASS(iGTLinkMessageBase,BaseObject);
@@ -37,7 +38,7 @@ namespace sofa::openigtlink
         bool m_isDirty;
     };
 
-    class iGTLinkMessage : public iGTLinkMessageBase
+    class SOFA_IGTLINK_API iGTLinkMessage : public iGTLinkMessageBase
     {
     public:
         SOFA_CLASS(iGTLinkMessage,iGTLinkMessageBase);

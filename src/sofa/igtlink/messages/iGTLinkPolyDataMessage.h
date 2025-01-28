@@ -3,12 +3,13 @@
 #include <sofa/igtlink/messages/iGTLinkMessage.h>
 #include <sofa/core/topology/BaseMeshTopology.h>
 #include <igtlPolyDataMessage.h>
+#include <sofa/igtlink/config.h>
 
 using namespace sofa::core::objectmodel;
 namespace sofa::openigtlink
 {
     template<class DataType>
-    class iGTLinkPolyDataMessage : public iGTLinkMessage
+    class SOFA_IGTLINK_API iGTLinkPolyDataMessage : public iGTLinkMessage
     {
         typedef typename DataType::Coord Vec3;
     public:

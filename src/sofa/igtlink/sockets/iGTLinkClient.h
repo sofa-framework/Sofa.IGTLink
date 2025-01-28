@@ -1,5 +1,6 @@
 #pragma once
 #include <sofa/core/objectmodel/Data.h>
+#include <sofa/igtlink/config.h>
 
 #include <string>
 
@@ -11,7 +12,7 @@ using namespace sofa::core::objectmodel;
 
 namespace sofa::openigtlink
 {
-    class iGTLinkClient : public iGTLinkBase
+    class SOFA_IGTLINK_API iGTLinkClient : public iGTLinkBase
     {
     public:
         iGTLinkClient();

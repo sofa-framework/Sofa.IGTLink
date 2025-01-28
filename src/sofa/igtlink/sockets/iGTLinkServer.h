@@ -9,12 +9,13 @@
 #include <igtlServerSocket.h>
 #include <sofa/igtlink/sockets/iGTLinkBase.h>
 #include <sofa/igtlink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/config.h>
 
 using namespace sofa::core::objectmodel;
 
 namespace sofa::openigtlink
 {
-    class iGTLinkServer : public iGTLinkBase
+    class SOFA_IGTLINK_API iGTLinkServer : public iGTLinkBase
     {
     public:
         iGTLinkServer();

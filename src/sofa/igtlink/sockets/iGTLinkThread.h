@@ -7,13 +7,14 @@
 #include <mutex>
 #include <sofa/igtlink/messages/iGTLinkMessage.h>
 #include <sofa/core/objectmodel/Data.h>
+#include <sofa/igtlink/config.h>
 
 class iGTLinkBase;
 using namespace sofa::core::objectmodel;
 
 namespace sofa::openigtlink
 {
-    class iGTLinkBaseThread
+    class SOFA_IGTLINK_API iGTLinkBaseThread
     {
     public:
         iGTLinkBaseThread(iGTLinkBase* _link) : m_link(_link), m_thread(nullptr), m_running(false){}
@@ -32,7 +33,7 @@ namespace sofa::openigtlink
         iGTLinkBase * m_link;
     };
 
-    class iGTLinkReceiverThread : public iGTLinkBaseThread
+    class SOFA_IGTLINK_API iGTLinkReceiverThread : public iGTLinkBaseThread
     {
     public:
         iGTLinkReceiverThread(iGTLinkBase* _link);

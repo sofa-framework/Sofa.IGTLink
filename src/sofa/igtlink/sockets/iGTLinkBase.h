@@ -4,6 +4,7 @@
 #include <sofa/core/objectmodel/BaseObject.h>
 #include <igtlClientSocket.h>
 #include <sofa/simulation/AnimateBeginEvent.h>
+#include <sofa/igtlink/config.h>
 
 
 using namespace sofa::core::objectmodel;
@@ -13,7 +14,7 @@ namespace sofa::openigtlink
     class iGTLinkMessageBase;
     class iGTLinkReceiverThread;
 
-    class iGTLinkBase : public BaseObject
+    class SOFA_IGTLINK_API iGTLinkBase : public BaseObject
     {
     public:
         iGTLinkBase();
