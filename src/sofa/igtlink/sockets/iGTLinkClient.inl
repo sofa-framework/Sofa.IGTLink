@@ -12,6 +12,11 @@ iGTLinkClient::iGTLinkClient()
 
 }
 
+iGTLinkClient::~iGTLinkClient()
+{
+    m_socket->CloseSocket();
+}
+
 
 void iGTLinkClient::init()
 {
@@ -50,13 +55,16 @@ bool iGTLinkClient::tryConnect()
 
 bool iGTLinkClient::isConnected()
 {
-    bool connected = m_socket->GetConnected();
+    bool connected = m_socket && m_socket->GetConnected();
     if(!connected)
     {
         msg_warning(this) << "Socket not connected to hostname : " << d_hostname.getValue() << ":" <<d_port.getValue();
         d_componentState.setValue(ComponentState::Loading);
     }
-    d_componentState.setValue(ComponentState::Valid);
+    else
+    {
+        d_componentState.setValue(ComponentState::Valid);
+    }
     return connected;
 }
 
