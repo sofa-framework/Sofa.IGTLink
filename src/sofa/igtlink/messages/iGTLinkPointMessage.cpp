@@ -127,7 +127,10 @@ void iGTLinkPointMessage<DataType>::updateData(igtl::MessageBase::Pointer messag
         d_owners.endEdit();
 }
 
-static int iGTLinkPointMessageInt = sofa::core::RegisterObject("iGTLink messages")
-        .add< iGTLinkPointMessage<sofa::defaulttype::Vec3Types> >();
+void registeriGTLinkPointMessage(sofa::core::ObjectFactory* factory)
+{
+    factory->registerObjects(sofa::core::ObjectRegistrationData("iGTLink point messages")
+            .add< iGTLinkPointMessage<sofa::defaulttype::Vec3Types> >());
+}
 
 }

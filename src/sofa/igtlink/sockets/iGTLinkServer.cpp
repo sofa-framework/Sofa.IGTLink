@@ -6,7 +6,9 @@
 namespace sofa::openigtlink
 {
 
-    static int iGTLinkServerClass = sofa::core::RegisterObject("iGTLink Server wrapper")
-            .add< iGTLinkServer >(true)
-    ;
+void registeriGTLinkServer(sofa::core::ObjectFactory* factory)
+{
+    factory->registerObjects(sofa::core::ObjectRegistrationData("iGTLink Server wrapper")
+        .add< iGTLinkServer >(true));
+}
 }

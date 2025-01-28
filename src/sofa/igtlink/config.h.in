@@ -31,3 +31,8 @@
 #else
 #  define SOFA_IGTLINK_API SOFA_IMPORT_DYNAMIC_LIBRARY
 #endif
+
+namespace sofa::openigtlink
+{
+    constexpr const char *MODULE_NAME = "@PROJECT_NAME@";
+}

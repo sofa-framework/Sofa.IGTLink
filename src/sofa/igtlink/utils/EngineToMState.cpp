@@ -5,9 +5,12 @@ namespace sofa::openigtlink {
 
 SOFA_DECL_CLASS(EngineToMState)
 
-int EngineToMStateClass = core::RegisterObject("")
-.add<EngineToMState<defaulttype::Vec3Types> >(true)
-.add<EngineToMState<defaulttype::Rigid3dTypes> >();
+void registerEngineToMState(sofa::core::ObjectFactory* factory)
+{
+    factory->registerObjects(sofa::core::ObjectRegistrationData("Engine to store data in mstate while dealing with correct resizing")
+        .add<EngineToMState<defaulttype::Vec3Types> >(true)
+        .add<EngineToMState<defaulttype::Rigid3dTypes> >());
+}
 
 }
 

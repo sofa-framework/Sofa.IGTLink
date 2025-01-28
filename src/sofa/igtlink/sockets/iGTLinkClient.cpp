@@ -6,7 +6,10 @@
 namespace sofa::openigtlink
 {
 
-static int iGTLinkClientClass = sofa::core::RegisterObject("iGTLink client wrapper")
-.add< iGTLinkClient >(true)
-;
+void registeriGTLinkClient(sofa::core::ObjectFactory* factory)
+{
+    factory->registerObjects(sofa::core::ObjectRegistrationData("iGTLink client wrapper")
+            .add< iGTLinkClient >(true));
+}
+
 }
