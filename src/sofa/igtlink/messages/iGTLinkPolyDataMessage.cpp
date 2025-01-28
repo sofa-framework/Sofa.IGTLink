@@ -2,6 +2,7 @@
 
 #include "sofa/core/ObjectFactory.h"
 #include <sofa/igtlink/messages/iGTLinkPolyDataMessage.h>
+#include <sofa/igtlink/messages/iGTLinkMessageFactory.h>
 
 
 using namespace sofa::core::objectmodel;
@@ -267,9 +268,12 @@ void iGTLinkPolyDataMessage<DataType>::updateData(igtl::MessageBase::Pointer mes
     }
 }
 
+
 void registeriGTLinkPolyDataMessage(sofa::core::ObjectFactory* factory)
 {
     factory->registerObjects(sofa::core::ObjectRegistrationData("iGTLink PolyData messages")
         .add< iGTLinkPolyDataMessage<sofa::defaulttype::Vec3Types> >());
 }
+int PolyDataMessageInt = iGTLinkMessageFactory::registerMessage<igtl::PolyDataMessage>("POLYDATA");
+
 }

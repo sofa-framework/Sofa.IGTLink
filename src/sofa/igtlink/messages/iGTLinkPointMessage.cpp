@@ -2,6 +2,7 @@
 
 #include "sofa/core/ObjectFactory.h"
 #include <sofa/igtlink/messages/iGTLinkPointMessage.h>
+#include <sofa/igtlink/messages/iGTLinkMessageFactory.h>
 #include <igtlPointMessage.h>
 
 using namespace sofa::core::objectmodel;
@@ -132,5 +133,7 @@ void registeriGTLinkPointMessage(sofa::core::ObjectFactory* factory)
     factory->registerObjects(sofa::core::ObjectRegistrationData("iGTLink point messages")
             .add< iGTLinkPointMessage<sofa::defaulttype::Vec3Types> >());
 }
+
+int PointMessageInt = iGTLinkMessageFactory::registerMessage<igtl::PointMessage>("POINT");
 
 }

@@ -85,19 +85,10 @@ namespace sofa::openigtlink
         }
         headerMsg->Unpack();
 
-        //TODO This whole if could be remplaced with a factory, or templated layer.
-        igtl::MessageBase::Pointer dataMessage;
-        if (strcmp(headerMsg->GetDeviceType(), "POINT") == 0)
+        igtl::MessageBase::Pointer dataMessage = iGTLinkMessageFactory::getMessagePtr(headerMsg->GetDeviceType());
+        if (dataMessage == nullptr)
         {
-            dataMessage = igtl::PointMessage::New();
-        }
-        else if (strcmp(headerMsg->GetDeviceType(), "POLYDATA") == 0)
-        {
-            dataMessage = igtl::PolyDataMessage::New();
-        }
-        else
-        {
-            msg_warning(m_link) << "Message  of type " << headerMsg->GetDeviceType() << " received, but not implemented yet";
+            msg_warning(m_link) << "Message  of type " << headerMsg->GetDeviceType() << " received, but not present in the iGTLinkMessageFactory";
             return;
         }
 

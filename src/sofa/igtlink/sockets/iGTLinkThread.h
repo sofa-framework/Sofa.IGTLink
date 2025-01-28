@@ -6,6 +6,7 @@
 #include <atomic>
 #include <mutex>
 #include <sofa/igtlink/messages/iGTLinkMessage.h>
+#include <sofa/igtlink/messages/iGTLinkMessageFactory.h>
 #include <sofa/core/objectmodel/Data.h>
 #include <sofa/igtlink/config.h>
 
