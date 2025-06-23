@@ -23,7 +23,7 @@
 
 
     <iGTLinkServer name="iGTLServer" sender="false" port="18944"/>
-    <iGTLinkPointMessage name="AttachPointMessage" iGTLink="@iGTLServer"
+    <iGTLinkPointMessage name="AttachPointMessage" iGTLink="@iGTLServer" points="0.5 0.05 0.05"
                          enableRadius="false"
                          enableLabels="false"
                          enableGroups="false"
@@ -42,9 +42,7 @@
     <Node name="AttachPoint">
         <PointSetTopologyContainer name="Container" />
         <PointSetTopologyModifier name="Modifier"/>
-        <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="2" showObjectScale="0.01" showObject="false"/>
-        <EngineToMState state="@mstate" position="@../AttachPointMessage.points" template="Vec3d"/>
-
+        <MechanicalObject name="mstate" template="Vec3d" position="@../AttachPointMessage.points" drawMode="2" showObjectScale="0.01" showObject="false"/>
     </Node>
 
     <Node name="FEM">
@@ -84,8 +82,7 @@
             <PointSetTopologyModifier name="Modifier"/>
             <MechanicalObject name="mstate" template="Vec3d" position="0.5 0.05 0.05" drawMode="1" showObjectScale="0.01" showColor="0 1 0"  showObject="false"/>
 
-            <UserInteractionController name="UIC" inStiffness="10000" reactionTime="50" position="@../../AttachPointMessage.points" />
-            <RestShapeSpringsForceField stiffness='@UIC.outStiffness'  external_rest_shape='@../../AttachPoint/mstate' points='0' external_points='0'/>
+            <RestShapeSpringsForceField stiffness='10000'  external_rest_shape='@../../AttachPoint/mstate' points='0' external_points='0'/>
 
             <BarycentricMapping />
         </Node>
