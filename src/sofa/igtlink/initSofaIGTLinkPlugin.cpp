@@ -11,9 +11,6 @@ extern void registeriGTLinkPointMessage(sofa::core::ObjectFactory* factory);
 extern void registeriGTLinkPolyDataMessage(sofa::core::ObjectFactory* factory);
 extern void registeriGTLinkClient(sofa::core::ObjectFactory* factory);
 extern void registeriGTLinkServer(sofa::core::ObjectFactory* factory);
-extern void registerEngineToMState(sofa::core::ObjectFactory* factory);
-extern void registerPickingInteractor(sofa::core::ObjectFactory* factory);
-extern void registerUserInteractionController(sofa::core::ObjectFactory* factory);
 
 extern "C"
 {
@@ -48,9 +45,6 @@ extern "C"
         registeriGTLinkPolyDataMessage(factory);
         registeriGTLinkClient(factory);
         registeriGTLinkServer(factory);
-        registerEngineToMState(factory);
-        registerPickingInteractor(factory);
-        registerUserInteractionController(factory);
     }
 
 }  // extern "C"
